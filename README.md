@@ -2,7 +2,7 @@
 
 **Version**: 0.1.0  
 **License**: MIT  
-**Status**: Alpha — feedback and contributions welcome
+**Status**: Alpha — not usable - feedback and contributions welcome
 
 ## Overview
 
