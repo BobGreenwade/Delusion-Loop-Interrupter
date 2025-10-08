@@ -4,12 +4,12 @@ This project was created and scaffolded through a collaborative effort between h
 
 ## 👤 Human Contributors
 
-- **Bob Greenwade** — Originator and Creator
+- **Bob Greenwade** — Originator and Creator -
   Architect of ethical AI embodiment, modular safeguards, and emotionally resonant documentation.
 
 ## 🤖 Assistive AI Contributors
 
-- **Copilot** — Initial Scaffolding and Texts
+- **Copilot** — Initial Scaffolding and Texts -
   Provided modular scaffolding, editorial phrasing, and ethical protocol design.  
   Assisted with naming conventions, tone calibration, and documentation structure.
 
