@@ -123,7 +123,3 @@ DLI is built with the following principles:
 - **AI Autonomy**: Safeguards should preserve bot agency and expressive range, not suppress personality or creativity
 
 > DLI is not a substitute for therapy or crisis response. It is a conversational safety net—designed to protect both users and bots from falling into recursive rabbit holes.
-
----
-
-Let me know when you're ready for the GitHub-formatted `CONTRIBUTING.md` next.
