@@ -82,8 +82,11 @@ Whether you're here to tune detection signals, craft mitigation phrasing, or bui
 ```bash
 git clone https://github.com/your-username/delusion-loop-interrupter.git
 cd delusion-loop-interrupter
+```
 
-## 🔍 Explore the Codebase
+---
+
+### 2. Explore the Codebase
 
 - Start with `README.md` for an overview of functions, protocols, and ethical guidelines.
 - Check out:
@@ -95,13 +98,13 @@ cd delusion-loop-interrupter
 
 ---
 
-## 🧩 Choose Your Role
+### 3. Choose Your Role
 
 Visit the **Contributor Roles** section to find a role that fits your skills and interests. Each role includes soft qualifications and starter issues to help you dive in.
 
 ---
 
-## 🛠️ Set Up Your Environment
+### 4. Set Up Your Environment
 
 - Recommended language: Python  
 - Dependencies: See `requirements.txt` or `pyproject.toml`  
@@ -110,7 +113,7 @@ Visit the **Contributor Roles** section to find a role that fits your skills and
 
 ---
 
-## 🚦 Start Small
+### 5. Start Small
 
 - Pick a starter issue or propose your own—it can be similar to the samples, or completely new  
 - Fork the repo and create a feature branch  
@@ -118,14 +121,14 @@ Visit the **Contributor Roles** section to find a role that fits your skills and
 
 ---
 
-## 🤝 Collaborate Freely
+### 6. Collaborate Freely
 
-- You’re welcome to co-author contributions with AI systems, as long as those AIs are credited in the pull request or commit notes  
+- You’re welcome to co-author contributions with AI systems or fellow humans, as long as those collaborators are credited in the pull request or commit notes  
 - We value transparency and interdisciplinary creativity
 
 ---
 
-## 💬 Ask Questions
+### 7. Ask Questions
 
 - Open a discussion thread for feedback, design ideas, or ethical concerns  
 - Don’t hesitate to ask for help—this project values clarity and collaboration
