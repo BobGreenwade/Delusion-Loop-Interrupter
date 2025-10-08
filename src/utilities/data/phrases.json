@@ -1,0 +1,17 @@
+[
+  {
+    "text": "Based on available evidence,",
+    "modes": ["factual"],
+    "tones": ["neutral", "clinical"]
+  },
+  {
+    "text": "Submitted for your approval:",
+    "modes": ["fictional", "fantasy"],
+    "tones": ["editorial", "playful"]
+  },
+  {
+    "text": "I'm not sure about this,",
+    "modes": ["factual", "fictional"],
+    "tones": ["soft", "editorial"]
+  }
+]
