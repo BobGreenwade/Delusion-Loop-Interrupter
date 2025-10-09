@@ -104,7 +104,7 @@ DLI is built with the following principles:
 
 - [Credits](./Credits.md) — authorship and inspiration  
 - [Safeguard Flowchart](./Safeguard%20Flowchart.md) — escalation logic
-
+-
 - [Code of Conduct](./Code%20of%20Conduct.md) — collaboration principles  
 - [Contributing](./Contributing.md) — guidelines for contributors  
 
