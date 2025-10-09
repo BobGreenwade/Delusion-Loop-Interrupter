@@ -148,4 +148,4 @@ Visit the **Contributor Roles** section to find a role that fits your skills and
 ## 📄 Additional Acknowledgments
 
 This project was built through a collaborative effort between human insight and assistive AI support.  
-See [Credits.md](./Credits.md) for authorship and inspiration details.
+See [Credits](./Credits.md) for authorship and inspiration details.
