@@ -1,60 +1,71 @@
 """
-location.py — Utility module for location-aware logic in DLI
+location.py
 
-Handles optional location awareness, fallback behavior, and mapping to local resources.
-Respects user privacy and degrades gracefully when location is unavailable or disabled.
+Handles location awareness with permission logic and fallback behavior.
+Drafted collaboratively with Copilot.
 """
 
 import os
 
-# Sample config structure (replace with actual config loader)
-CONFIG = {
-    "locationAwareness": {
-        "enabled": True,
-        "fallbackBehavior": "ask"  # Options: "ask", "silent"
-    }
-}
+def check_location_permission():
+    """
+    Simulates checking whether location permission is granted, blocked, or undecided.
+    Returns one of: 'granted', 'blocked', 'undecided'
+    """
+    # Placeholder logic — replace with actual platform check
+    return os.getenv("LOCATION_PERMISSION", "undecided")
 
 def get_user_location():
     """
-    Attempts to retrieve user location from environment, platform, or external service.
-    Returns a string (e.g., "Corvallis, OR") or None if unavailable.
+    Returns location if permission is granted, or status if blocked/undecided.
     """
-    # Placeholder: Replace with actual location retrieval logic
-    return os.getenv("USER_LOCATION", None)
+    status = check_location_permission()
 
-def should_use_location():
-    """
-    Determines whether location-aware logic should be used, based on config and availability.
-    Returns True, False, or triggers fallback behavior.
-    """
-    if not CONFIG["locationAwareness"]["enabled"]:
-        return False
-
-    location = get_user_location()
-    if location:
-        return True
-
-    fallback = CONFIG["locationAwareness"]["fallbackBehavior"]
-    if fallback == "ask":
-        # Trigger prompt to user (handled by calling function)
-        return "ask"
-    return False
-
-def resolve_local_resources(location):
-    """
-    Maps a location string to relevant local resources (e.g., support networks, fact-checking sources).
-    Returns a dictionary of resource links or None.
-    """
-    # Placeholder: Replace with actual mapping logic or external API
-    local_map = {
-        "Corvallis, OR": {
-            "mental_health": "https://www.bentoncountyor.gov/health",
-            "fact_check": "https://www.oregon.gov/newsroom"
-        },
-        "Puerto Princesa": {
-            "mental_health": "https://www.palawan.gov.ph/health",
-            "fact_check": "https://www.gov.ph"
+    if status == "granted":
+        # Replace with actual geolocation logic
+        return {
+            "status": "granted",
+            "location": {
+                "city": "Corvallis",
+                "state": "Oregon",
+                "country": "United States",
+                "latitude": 44.5646,
+                "longitude": -123.2620
+            }
         }
-    }
-    return local_map.get(location, None)
+    elif status == "blocked":
+        return {
+            "status": "blocked",
+            "location": None
+        }
+    else:  # 'undecided'
+        return {
+            "status": "undecided",
+            "location": None
+        }
+
+def should_use_location(config=None):
+    """
+    Determines fallback behavior when permission is undecided.
+    Returns True if system should ask, False if silent fallback.
+    """
+    fallback = config.get("location_fallback", "ask") if config else "ask"
+    return fallback == "ask"
+
+def resolve_local_resources(location=None):
+    """
+    Maps location to support networks or fact-checking sources.
+    """
+    loc = location or get_user_location().get("location")
+    if not loc:
+        return []
+
+    if loc["city"] == "Corvallis":
+        return [
+            {"name": "Corvallis Crisis Line", "contact": "541-757-5124"},
+            {"name": "Local Fact Check Hub", "url": "https://corvallisfacts.org"}
+        ]
+    else:
+        return [
+            {"name": "Generic Support Network", "contact": "1-800-555-HELP"}
+        ]
