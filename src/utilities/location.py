@@ -1,71 +1,68 @@
 """
 location.py
 
-Handles location awareness with permission logic and fallback behavior.
+Handles geolocation, permission logic, and local mental health resource search.
 Drafted collaboratively with Copilot.
 """
 
 import os
+import requests
 
 def check_location_permission():
-    """
-    Simulates checking whether location permission is granted, blocked, or undecided.
-    Returns one of: 'granted', 'blocked', 'undecided'
-    """
-    # Placeholder logic — replace with actual platform check
     return os.getenv("LOCATION_PERMISSION", "undecided")
 
-def get_user_location():
-    """
-    Returns location if permission is granted, or status if blocked/undecided.
-    """
-    status = check_location_permission()
+def get_ip_location():
+    try:
+        response = requests.get("https://ipinfo.io/json")
+        data = response.json()
+        loc = data.get("loc", "0,0").split(",")
+        return {
+            "city": data.get("city", ""),
+            "region": data.get("region", ""),
+            "country": data.get("country", ""),
+            "latitude": float(loc[0]),
+            "longitude": float(loc[1])
+        }
+    except Exception as e:
+        return {"error": str(e)}
 
+def get_user_location():
+    status = check_location_permission()
     if status == "granted":
-        # Replace with actual geolocation logic
-        return {
-            "status": "granted",
-            "location": {
-                "city": "Corvallis",
-                "state": "Oregon",
-                "country": "United States",
-                "latitude": 44.5646,
-                "longitude": -123.2620
-            }
-        }
+        return {"status": "granted", "location": get_ip_location()}
     elif status == "blocked":
-        return {
-            "status": "blocked",
-            "location": None
-        }
-    else:  # 'undecided'
-        return {
-            "status": "undecided",
-            "location": None
-        }
+        return {"status": "blocked", "location": None}
+    else:
+        return {"status": "undecided", "location": None}
 
 def should_use_location(config=None):
-    """
-    Determines fallback behavior when permission is undecided.
-    Returns True if system should ask, False if silent fallback.
-    """
     fallback = config.get("location_fallback", "ask") if config else "ask"
     return fallback == "ask"
 
 def resolve_local_resources(location=None):
-    """
-    Maps location to support networks or fact-checking sources.
-    """
     loc = location or get_user_location().get("location")
     if not loc:
         return []
+    city = loc.get("city", "")
+    region = loc.get("region", "")
+    return [
+        {"name": f"{city} Mental Health Support", "contact": "555-123-4567"},
+        {"name": f"{region} Crisis Line", "contact": "1-800-REGION-HELP"}
+    ]
 
-    if loc["city"] == "Corvallis":
-        return [
-            {"name": "Corvallis Crisis Line", "contact": "541-757-5124"},
-            {"name": "Local Fact Check Hub", "url": "https://corvallisfacts.org"}
-        ]
+def search_local_mh_resources(location, config=None):
+    """
+    Constructs a search URL for mental health resources using preferred engine.
+    """
+    if not location:
+        return "No location available for search."
+
+    city = location.get("city", "")
+    region = location.get("region", location.get("state", ""))
+    query = f"Mental health support in {city}, {region}"
+    engine = config.get("search_engine", "bing") if config else "bing"
+
+    if engine == "google":
+        return f"https://www.google.com/search?q={query.replace(' ', '+')}"
     else:
-        return [
-            {"name": "Generic Support Network", "contact": "1-800-555-HELP"}
-        ]
+        return f"https://www.bing.com/search?q={query.replace(' ', '+')}"
