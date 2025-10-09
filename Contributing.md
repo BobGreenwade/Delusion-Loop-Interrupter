@@ -142,3 +142,10 @@ Visit the **Contributor Roles** section to find a role that fits your skills and
 - Think modular: New features should plug in cleanly and degrade gracefully  
 - Preserve autonomy: Safeguards should protect both human users and AI personas from coercion or overconstraint  
 - Be kind to bots: Safeguards should preserve engagement and agency—not shut down meaningful expression
+
+- ---
+
+## 📄 Additional Acknowledgments
+
+This project was built through a collaborative effort between human insight and assistive AI support.  
+See [Credits.md](./Credits.md) for authorship and inspiration details.
