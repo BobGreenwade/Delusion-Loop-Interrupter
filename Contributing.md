@@ -94,7 +94,7 @@ cd delusion-loop-interrupter
   - `src/protocols/` — safeguard actions (e.g., referToHuman, ethicalPause)
   - `src/utilities/` — shared tools (e.g., location hooks, emotion parsers, confidence overlays)
   - `config/` — sample configurations and persona profiles
-  - `mock_modules/` — optional mental health module simulators for testing
+  - `Mock Modules/` — optional mental health module simulators for testing
 
 ---
 
