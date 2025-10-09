@@ -1,0 +1,16 @@
+# Core dependencies
+numpy
+scikit-learn
+transformers
+torch
+
+# NLP and emotion analysis
+nltk
+textblob
+
+# Optional: location and external API support
+geopy
+requests
+
+# Logging and config
+python-dotenv
