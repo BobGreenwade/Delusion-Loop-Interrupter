@@ -50,16 +50,17 @@ def resolve_local_resources(location=None):
         {"name": f"{region} Crisis Line", "contact": "1-800-REGION-HELP"}
     ]
 
-def search_local_mh_resources(location, config=None):
+def search_local(resource_type, location, config=None):
     """
-    Constructs a search URL for mental health resources using preferred engine.
+    Constructs a search URL for local resources using preferred engine.
+    Accepts any resource type (e.g., 'mental health support', 'physics lab').
     """
     if not location:
-        return "No location available for search."
+        return None  # Let caller decide fallback
 
     city = location.get("city", "")
     region = location.get("region", location.get("state", ""))
-    query = f"Mental health support in {city}, {region}"
+    query = f"{resource_type} in {city}, {region}"
     engine = config.get("search_engine", "bing") if config else "bing"
 
     if engine == "google":
