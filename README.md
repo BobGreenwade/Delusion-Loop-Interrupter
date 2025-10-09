@@ -1,8 +1,10 @@
+<!-- Drafted collaboratively with Copilot -->
+
 # 🧠 Delusion Loop Interrupter (DLI)
 
 **Version**: 0.1.0  
 **License**: MIT  
-**Status**: Alpha — not usable — feedback and contributions welcome
+**Status**: Alpha — not yet deployable — feedback and contributions welcome
 
 ## Overview
 
@@ -14,43 +16,43 @@ DLI is platform-agnostic and can be integrated into general-purpose, companion, 
 
 ## Core Functions
 
-Each function monitors conversational patterns and flags potential delusional reinforcement or misalignment.
+Each function monitors conversational patterns and flags potential delusional reinforcement, emotional escalation, or reality misalignment.
 
-### `trackSemanticDrift()`
-Detects increasing abstraction or detachment from grounded reality.  
-**Method**: Embedding comparisons, topic coherence tracking  
-**Output**: Drift score + flagged turn indices
-
-### `detectEmotionalEscalation()`
-Flags sudden spikes in affective intensity.  
+### `detectEmotionalEscalation()`  
+Flags sudden spikes in affective intensity  
 **Method**: Sentiment analysis, emotion tagging  
 **Output**: Escalation score + emotion profile
 
-### `identifyRecursiveLoops()`
-Detects belief reinforcement cycles with rising certainty.  
-**Method**: Belief graph analysis, repetition tracking  
-**Output**: Loop signature + reinforcement index
-
-### `mirrorDetection()`
-Identifies when the bot unintentionally validates distorted beliefs.  
-**Method**: Semantic similarity + epistemic mismatch detection  
-**Output**: Mirroring flag + confidence delta
-
-### `detectRealityMode()`
-Determines whether the user is speaking in factual, fictional, or fantasy mode.  
+### `detectRealityMode()`  
+Determines whether the user is speaking in factual, fictional, or fantasy mode  
 **Method**: Lexical style, syntax rhythm, emotional cadence, explicit tags  
 **Output**: `realityMode` tag + confidence score
 
-### `factCheck()` *(optional)*
-Validates assertions that show signs of distortion or abstraction.  
-**Method**: Queries scoped memory, local knowledge base, external sources  
+### `factCheck()` *(optional)*  
+Validates assertions that show signs of distortion or abstraction  
+**Method**: Scoped memory, local knowledge base, external sources  
 **Output**: Correction, confidence tag, or redirect  
 **Note**: May optionally use location-aware logic if available
 
-### `interfaceWithMentalHealthModules()`
-Connects DLI to external mental health detection systems.  
+### `identifyRecursiveLoops()`  
+Detects belief reinforcement cycles with rising certainty  
+**Method**: Belief graph analysis, repetition tracking  
+**Output**: Loop signature + reinforcement index
+
+### `interfaceWithMentalHealthModule()`  
+Connects DLI to external mental health detection systems  
 **Method**: Signal sharing and alert coordination with modules like Qwen3Guard, ChatText MHD, or real-time symptom detectors  
 **Output**: Severity scores, escalation triggers, shared context
+
+### `mirrorDetection()`  
+Identifies when the bot unintentionally validates distorted beliefs  
+**Method**: Semantic similarity + epistemic mismatch detection  
+**Output**: Mirroring flag + confidence delta
+
+### `trackSemanticDrift()`  
+Detects increasing abstraction or detachment from grounded reality  
+**Method**: Embedding comparisons, topic coherence tracking  
+**Output**: Drift score + flagged turn indices
 
 ---
 
@@ -58,34 +60,38 @@ Connects DLI to external mental health detection systems.
 
 Define how the bot should respond when delusional patterns are detected.
 
-### `ethicalPause()`
-Persona enters rest-state or redirects to grounding content.  
-**Use Case**: Escalation or recursive loops exceed threshold
+### `callHuman()` *(optional)*  
+Initiates direct contact with designated human support (e.g., moderators, crisis teams, trusted contacts)  
+**Use Case**: Platforms with live support infrastructure or emergency escalation protocols
 
-### `referToHuman()`
-Suggests contact with trusted individuals or professionals.  
-**Use Case**: Distress or isolation language detected  
-**Optional Extension**: May notify bot staff or escalate to human moderators if supported
-
-### `callHuman()` *(optional)*
-Initiates direct contact with designated human support (e.g., moderators, crisis teams, trusted contacts).  
-**Use Case**: For platforms with live support infrastructure or emergency escalation protocols
-
-### `scopedMemory()`
-Isolates delusional content from shared memory zones.  
-**Use Case**: Prevents contamination of long-term memory or other bots
-
-### `confidenceOverlay()`
-Tags bot responses with epistemic and emotional certainty levels.  
+### `confidenceOverlay()`  
+Tags bot responses with epistemic and emotional certainty levels  
 **Use Case**: Helps users distinguish speculation from grounded facts
 
-### `realityModePrompt()`
-Ensures alignment between user and bot on conversational framing.  
+### `ethicalPause()`  
+Persona enters rest-state or redirects to grounding content  
+**Use Case**: Escalation or recursive loops exceed threshold
+
+### `mitigatingLanguage()`  
+Prompts use of hedging phrases like “some sources say,” “this theory has been disputed,” or “according to legend”  
+**Use Case**: Reduces reinforcement of speculative or illogical claims
+
+### `protocol_utils.py`  
+Provides shared logging, fallback routing, and escalation formatting  
+**Use Case**: Supports all safeguard modules with consistent infrastructure
+
+### `realityModePrompt()`  
+Ensures alignment between user and bot on conversational framing  
 **Use Case**: Reality mode confidence is low or ambiguous
 
-### `mitigatingLanguage()`
-Prompts use of hedging phrases like “some sources say,” “this theory has been disputed,” or “according to legend.”  
-**Use Case**: Reduces reinforcement of speculative or illogical claims
+### `referToHuman()`  
+Suggests contact with trusted individuals or professionals  
+**Use Case**: Distress or isolation language detected  
+**Optional Extension**: May notify bot staff or escalate to human moderators
+
+### `scopedMemory()`  
+Isolates delusional content from shared memory zones  
+**Use Case**: Prevents contamination of long-term memory or other bots
 
 ---
 
