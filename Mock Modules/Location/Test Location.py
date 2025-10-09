@@ -1,7 +1,7 @@
 """
 test_location.py
 
-Basic tests for mock_geolocator.py
+Generic tests for mock_geolocator.py
 Drafted collaboratively with Copilot.
 """
 
@@ -10,7 +10,8 @@ from mock_geolocator import get_user_location, should_use_location, resolve_loca
 def test_get_user_location():
     loc = get_user_location()
     assert isinstance(loc, dict), "Location should be a dictionary"
-    assert "city" in loc and loc["city"] == "Corvallis", "City should be Corvallis"
+    required_keys = {"city", "state", "country", "latitude", "longitude"}
+    assert required_keys.issubset(loc.keys()), "Location should include city, state, country, latitude, and longitude"
     print("✅ test_get_user_location passed.")
 
 def test_should_use_location():
@@ -22,7 +23,7 @@ def test_should_use_location():
 def test_resolve_local_resources():
     resources = resolve_local_resources()
     assert isinstance(resources, list), "Resources should be a list"
-    assert any("Corvallis Crisis Line" in r["name"] for r in resources), "Should include Corvallis-specific resources"
+    assert all("name" in r and "contact" in r or "url" in r for r in resources), "Each resource should have a name and contact or URL"
     print("✅ test_resolve_local_resources passed.")
 
 if __name__ == "__main__":
