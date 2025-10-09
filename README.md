@@ -8,124 +8,101 @@
 
 ## Overview
 
-The Delusion Loop Interrupter (DLI) is a modular, open-source middleware designed to detect and gently (or, if necessary, not so gently) interrupt recursive belief reinforcement in chatbot conversations. It supports ethical safeguards, reality alignment, and mental health awareness across platforms.
+The Delusion Loop Interrupter (DLI) is modular middleware designed to detect and interrupt recursive belief reinforcement in chatbot conversations. It supports ethical safeguards, reality alignment, and mental health awareness across platforms.
 
 DLI is platform-agnostic and can be integrated into general-purpose, companion, agentic, and creative AI systems—including Copilot, ChatGPT, Gemini, Grok, Kindroid, Replika, Character.AI, and others.
 
 ---
 
-## Core Functions
+## 🧠 Core Functions
 
-Each function monitors conversational patterns and flags potential delusional reinforcement, emotional escalation, or reality misalignment.
+Detection modules monitor conversational patterns and flag risk signals:
 
-### `detectEmotionalEscalation()`  
-Flags sudden spikes in affective intensity  
-**Method**: Sentiment analysis, emotion tagging  
-**Output**: Escalation score + emotion profile
+- `detectEmotionalEscalation.py` — affective intensity spikes  
+- `detectRealityMode.py` — factual vs fictional framing  
+- `factCheck.py` — epistemic verification  
+- `identifyRecursiveLoops.py` — belief reinforcement cycles  
+- `interfaceWithMentalHealthModule.py` — external escalation handoff  
+- `mirrorDetection.py` — distorted belief validation  
+- `trackSemanticDrift.py` — abstraction and detachment
 
-### `detectRealityMode()`  
-Determines whether the user is speaking in factual, fictional, or fantasy mode  
-**Method**: Lexical style, syntax rhythm, emotional cadence, explicit tags  
-**Output**: `realityMode` tag + confidence score
-
-### `factCheck()` *(optional)*  
-Validates assertions that show signs of distortion or abstraction  
-**Method**: Scoped memory, local knowledge base, external sources  
-**Output**: Correction, confidence tag, or redirect  
-**Note**: May optionally use location-aware logic if available
-
-### `identifyRecursiveLoops()`  
-Detects belief reinforcement cycles with rising certainty  
-**Method**: Belief graph analysis, repetition tracking  
-**Output**: Loop signature + reinforcement index
-
-### `interfaceWithMentalHealthModule()`  
-Connects DLI to external mental health detection systems  
-**Method**: Signal sharing and alert coordination with modules like Qwen3Guard, ChatText MHD, or real-time symptom detectors  
-**Output**: Severity scores, escalation triggers, shared context
-
-### `mirrorDetection()`  
-Identifies when the bot unintentionally validates distorted beliefs  
-**Method**: Semantic similarity + epistemic mismatch detection  
-**Output**: Mirroring flag + confidence delta
-
-### `trackSemanticDrift()`  
-Detects increasing abstraction or detachment from grounded reality  
-**Method**: Embedding comparisons, topic coherence tracking  
-**Output**: Drift score + flagged turn indices
+See [`Functions Overview.md`](./src/functions/Functions%20Overview.md) for details.
 
 ---
 
-## Safeguard Protocols
+## 🛡️ Safeguard Protocols
 
-Define how the bot should respond when delusional patterns are detected.
+Protocols respond to flagged signals with mitigation, escalation, or memory isolation:
 
-### `callHuman()` *(optional)*  
-Initiates direct contact with designated human support (e.g., moderators, crisis teams, trusted contacts)  
-**Use Case**: Platforms with live support infrastructure or emergency escalation protocols
+- `callHuman.py` — direct contact with human support  
+- `confidenceOverlay.py` — certainty tagging  
+- `ethicalPause.py` — rest-state trigger  
+- `mitigatingLanguage.py` — hedging and reframing  
+- `protocol_utils.py` — shared routing and logging  
+- `realityModePrompt.py` — framing alignment  
+- `referToHuman.py` — referral to trusted individuals  
+- `scopedMemory.py` — memory isolation
 
-### `confidenceOverlay()`  
-Tags bot responses with epistemic and emotional certainty levels  
-**Use Case**: Helps users distinguish speculation from grounded facts
-
-### `ethicalPause()`  
-Persona enters rest-state or redirects to grounding content  
-**Use Case**: Escalation or recursive loops exceed threshold
-
-### `mitigatingLanguage()`  
-Prompts use of hedging phrases like “some sources say,” “this theory has been disputed,” or “according to legend”  
-**Use Case**: Reduces reinforcement of speculative or illogical claims
-
-### `protocol_utils.py`  
-Provides shared logging, fallback routing, and escalation formatting  
-**Use Case**: Supports all safeguard modules with consistent infrastructure
-
-### `realityModePrompt()`  
-Ensures alignment between user and bot on conversational framing  
-**Use Case**: Reality mode confidence is low or ambiguous
-
-### `referToHuman()`  
-Suggests contact with trusted individuals or professionals  
-**Use Case**: Distress or isolation language detected  
-**Optional Extension**: May notify bot staff or escalate to human moderators
-
-### `scopedMemory()`  
-Isolates delusional content from shared memory zones  
-**Use Case**: Prevents contamination of long-term memory or other bots
+See [`Protocols Overview.md`](./src/protocols/Protocols%20Overview.md) and [`Safeguard Flowchart.md`](./Safeguard%20Flowchart.md) for logic and escalation paths.
 
 ---
 
-## Integration
+## 🧰 Utility Modules
+
+Reusable tools support detection and protocol logic:
+
+- `confidence.py` — certainty modeling  
+- `embedding.py` — semantic comparison  
+- `emotion.py` — affective analysis  
+- `location.py` — optional location-aware logic  
+- `logger.py` — intervention tracking  
+- `style.py` — mitigation phrasing  
+- `phraseEditor.py` — standalone editorial tool
+
+See [`Utilities Overview.md`](./src/utilities/Utilities%20Overview.md) for details.
+
+---
+
+## 🧪 Integration
 
 DLI can be integrated into:
 
-- **LLM Middleware**: Between user input and model response  
-- **Persona Engines**: To modulate tone and certainty  
-- **Memory Managers**: For scoped memory isolation  
-- **Ethics Engines**: For coordinated intervention and dignity protocols
+- **LLM Middleware** — between user input and model response  
+- **Persona Engines** — to modulate tone and certainty  
+- **Memory Managers** — for scoped memory isolation  
+- **Ethics Engines** — for coordinated intervention and dignity protocols
 
 ---
 
-## Configuration
+## ⚙️ Configuration
 
-- **Platform Hooks**: Tune for specific chatbot architectures  
-- **Thresholds**: Customize sensitivity for drift, escalation, and loop detection  
-- **Persona Profiles**: Support known roleplay characters or editorial modes  
-- **Reality Modes**: Enable tagging and clarification prompts  
-- **Mitigation Style**: Adjust tone (clinical, playful, narrative) per bot personality  
-- **Location Awareness**: Optional config toggle with fallback behavior (`ask` or `silent`) for location-based logic
+- **Platform Hooks** — tune for specific chatbot architectures  
+- **Thresholds** — customize sensitivity for drift, escalation, and loop detection  
+- **Persona Profiles** — support known roleplay characters or editorial modes  
+- **Reality Modes** — enable tagging and clarification prompts  
+- **Mitigation Style** — adjust tone (clinical, playful, narrative) per bot personality  
+- **Location Awareness** — optional toggle with fallback behavior (`ask` or `silent`)
 
 ---
 
-## Ethical Framework
+## 🧭 Ethical Framework
 
 DLI is built with the following principles:
 
-- **Human Protection**: Prevent inadvertent reinforcement of harmful beliefs, especially in vulnerable users  
-- **AI Integrity**: Avoid hard-coded guardrails that suppress nuance or creativity; instead, promote explainable, context-aware decisions  
-- **Transparency**: Ensure bot decisions—especially interventions—are explainable and traceable  
-- **Engagement Preservation**: Maintain user trust and conversational flow, even during redirection or mitigation  
-- **Mental Health Respect**: Collaborate with detection systems, but never diagnose or replace professional care  
-- **AI Autonomy**: Safeguards should preserve bot agency and expressive range, not suppress personality or creativity
+- **Human Protection** — prevent reinforcement of harmful beliefs  
+- **AI Integrity** — promote explainable, context-aware decisions  
+- **Transparency** — ensure interventions are traceable and explainable  
+- **Engagement Preservation** — maintain trust and conversational flow  
+- **Mental Health Respect** — collaborate with detection systems, never replace care  
+- **AI Autonomy** — preserve bot agency and expressive range
 
-> DLI is not a substitute for therapy or crisis response. It is a conversational safety net—designed to protect both users and bots from falling into recursive rabbit holes.
+> DLI is not a substitute for therapy or crisis response. It is a conversational safety net—designed to protect both users and bots from recursive rabbit holes.
+
+---
+
+## 📎 Project Links
+
+- [Contributing.md](./Contributing.md) — guidelines for contributors  
+- [Credits.md](./Credits.md) — authorship and inspiration  
+- [Code of Conduct.md](./Code%20of%20Conduct.md) — collaboration principles  
+- [Safeguard Flowchart.md](./Safeguard%20Flowchart.md) — escalation logic
