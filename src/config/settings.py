@@ -1,23 +1,18 @@
 """
 settings.py — Configuration for safeguard protocols and escalation routing
 
-Defines thresholds, contact mappings, and delivery channels for ethical modules.
+Defines thresholds, delivery channels, and escalation modules for ethical systems.
 Used by callHuman, referToHuman, scopedMemory, and others.
+Drafted collaboratively with Copilot.
 """
 
 # Notification channels by priority
 NOTIFY_CHANNEL = {
-    "high": "secure_sms_gateway",
-    "moderate": "staff_email",
-    "normal": "log_only"
-}
-
-# Local contacts by deployment region
-LOCAL_CONTACTS = {
-    "Corvallis, OR": "Dr. Rivera (Community Liaison)",
-    "Puerto Princesa": "Ms. Santos (Field Ethics Officer)",
-    "Burabod": "Team Lead - Burabod Node",
-    "default": "Platform Safeguard Desk"
+    "critical": "voice_chat_relay",           # Real-time verbal escalation
+    "high": "secure_sms_gateway",             # Encrypted mobile alert
+    "moderate": "internal_dm"                 # In-house messaging system
+    "normal": "staff_email",                  # Standard email notification
+    "low": "log_only",                        # Logged for audit trail
 }
 
 # Thresholds for triggering protocols
