@@ -1,0 +1,26 @@
+[project]
+name = "delusion-loop-interrupter"
+version = "0.1.0"
+description = "Modular middleware for interrupting recursive belief reinforcement in chatbot conversations"
+authors = [
+  { name = "Bob Greenwade", email = "bob@example.com" }
+]
+license = "MIT"
+readme = "README.md"
+requires-python = ">=3.9"
+
+dependencies = [
+  "numpy",
+  "scikit-learn",
+  "transformers",
+  "torch",
+  "nltk",
+  "textblob",
+  "geopy",
+  "requests",
+  "python-dotenv"
+]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
