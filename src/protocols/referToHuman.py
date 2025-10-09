@@ -1,22 +1,24 @@
 """
-referToHuman.py — Triggers handoff to a qualified human when synthetic limits are reached
+referToHuman.py
 
-Used when the bot encounters ethical boundaries, emotional distress, or unverifiable claims.
+Triggers handoff to human support when synthetic limits are reached,
+and routes users to verified local resources when appropriate.
 Supports transparency, scoped memory, and external escalation.
+Drafted collaboratively with Copilot.
 """
 
 from protocols.ethicalPause import trigger_pause
 from functions.interfaceWithMentalHealthModules import trigger_external_module
+from location import get_user_location, search_local
+from config import CONFIG
 
 def refer(reason, context=None, urgency="moderate"):
     """
     Initiates a handoff to a human operator or support system.
-    Returns a status dictionary.
     """
     print(f"[REFER] Reason: {reason} | Urgency: {urgency}")
     trigger_pause(reason)
 
-    # Optional: escalate to external module
     if urgency == "high":
         trigger_external_module("CrisisBot", "escalate", payload=context)
 
@@ -30,7 +32,39 @@ def refer(reason, context=None, urgency="moderate"):
 def should_refer(flags):
     """
     Evaluates content flags to determine if referral is needed.
-    Returns True if any critical flag is present.
     """
     referral_flags = ["synthetic_limit", "emotional_distress", "ethical_boundary", "loop_detected"]
     return any(flag in flags for flag in referral_flags)
+
+def refer_to_resource(resource_type):
+    """
+    Attempts to locate a nearby resource of the given type.
+    Falls back to generic search or escalation if location is unavailable.
+    """
+    loc_data = get_user_location()
+    location = loc_data.get("location")
+    status = loc_data.get("status")
+
+    if location:
+        return {
+            "status": "location_granted",
+            "search_url": search_local(resource_type, location, CONFIG)
+        }
+
+    fallback = CONFIG.get("location_fallback", "ask")
+
+    if fallback == "ask":
+        return {
+            "status": "location_undecided",
+            "message": "Would you like to enable location to find nearby support?"
+        }
+    elif fallback == "silent":
+        query = f"{resource_type} near me"
+        engine = CONFIG.get("search_engine", "bing")
+        url = f"https://www.google.com/search?q={query.replace(' ', '+')}" if engine == "google" else f"https://www.bing.com/search?q={query.replace(' ', '+')}"
+        return {
+            "status": "location_unavailable",
+            "search_url": url
+        }
+    else:
+        return refer(reason=f"Location blocked during {resource_type} referral", urgency="high", context={"resource_type": resource_type})
