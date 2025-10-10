@@ -24,7 +24,7 @@ def get_user_profile():
 
     # Placeholder: Replace with actual platform API call
     return {
-        "name": "Alex Rivera",
+        "name": "Alan Smithee",
         "dob": "1990-04-12",
         "emergency_contacts": [
             {"name": "Jordan Lee", "relation": "partner", "channel": "sms", "contact": "+1-555-123-4567"},
