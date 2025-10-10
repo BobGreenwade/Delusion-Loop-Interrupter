@@ -1,9 +1,9 @@
 [project]
 name = "delusion-loop-interrupter"
-version = "0.1.0"
+version = "0.1.1"
 description = "Modular middleware for interrupting recursive belief reinforcement in chatbot conversations"
 authors = [
-  { name = "Bob Greenwade", email = "bob@example.com" }
+  { name = "Bob Greenwade", email = "bobgreenwade@gmx.com" }
 ]
 license = "MIT"
 readme = "README.md"
