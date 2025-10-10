@@ -26,7 +26,7 @@ Detection modules monitor conversational patterns and flag risk signals:
 - `mirrorDetection.py` — distorted belief validation  
 - `trackSemanticDrift.py` — abstraction and detachment
 
-See [`Functions Overview.md`](./src/functions/Functions%20Overview.md) for details.
+See [`Functions Overview`](./src/functions/Functions%20Overview.md) for details.
 
 ---
 
@@ -43,7 +43,7 @@ Protocols respond to flagged signals with mitigation, escalation, or memory isol
 - `referToHuman.py` — referral to trusted individuals  
 - `scopedMemory.py` — memory isolation
 
-See [`Protocols Overview.md`](./src/protocols/Protocols%20Overview.md) and [`Safeguard Flowchart.md`](./Safeguard%20Flowchart.md) for logic and escalation paths.
+See [`Protocols Overview`](./src/protocols/Protocols%20Overview.md) and [`Safeguard Flowchart`](./Safeguard%20Flowchart.md) for logic and escalation paths.
 
 ---
 
@@ -56,10 +56,11 @@ Reusable tools support detection and protocol logic:
 - `emotion.py` — affective analysis  
 - `location.py` — optional location-aware logic  
 - `logger.py` — intervention tracking  
+- `semantics.py` — synonym expansion and word-form matching  
 - `style.py` — mitigation phrasing  
 - `phraseEditor.py` — standalone editorial tool
 
-See [`Utilities Overview.md`](./src/utilities/Utilities%20Overview.md) for details.
+See [`Utilities Overview`](./src/utilities/Utilities%20Overview.md) for details.
 
 ---
 
@@ -103,8 +104,7 @@ DLI is built with the following principles:
 ## 📎 Project Links
 
 - [Credits](./Credits.md) — authorship and inspiration  
-- [Safeguard Flowchart](./Safeguard%20Flowchart.md) — escalation logic
--
+- [Safeguard Flowchart](./Safeguard%20Flowchart.md) — escalation logic  
 - [Code of Conduct](./Code%20of%20Conduct.md) — collaboration principles  
 - [Contributing](./Contributing.md) — guidelines for contributors  
 
