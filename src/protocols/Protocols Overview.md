@@ -43,19 +43,19 @@ This folder contains the ethical safeguard protocols for the Delusion Loop Inter
 - Escalation payload formatting  
 **Output**: Log entry + formatted escalation object
 
-### 👥 `referToHuman.py`  
-**Purpose**: Initiate handoff to a qualified human when escalation is required  
-**Methods**:  
-- Trigger mapping  
-- Referral packaging  
-**Output**: Referral payload + confirmation status
-
 ### 🔐 `realityModePrompt.py`  
 **Purpose**: Align bot prompts with user’s reality mode (factual, fictional, fantasy)  
 **Methods**:  
 - Mode detection  
 - Prompt adjustment  
 **Output**: Reality-aligned prompt + mode tag
+
+### 👥 `referToHuman.py`  
+**Purpose**: Initiate handoff to a qualified human when escalation is required  
+**Methods**:  
+- Trigger mapping  
+- Referral packaging  
+**Output**: Referral payload + confirmation status
 
 ### 🧠 `scopedMemory.py`  
 **Purpose**: Restrict or reset memory access based on context and escalation triggers  
