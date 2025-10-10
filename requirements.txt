@@ -1,8 +1,6 @@
 # Core dependencies
-nltk
 numpy
 scikit-learn
-textblob
 transformers
 torch
 
