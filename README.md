@@ -107,6 +107,7 @@ DLI is built with the following principles:
 
 ## 📎 Project Links
 
+- [Changelog](./Changelog.md) - log of changes between versions
 - [Credits](./Credits.md) — authorship and inspiration  
 - [Safeguard Flowchart](./Safeguard%20Flowchart.md) — escalation logic
    
