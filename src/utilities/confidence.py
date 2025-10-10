@@ -4,6 +4,7 @@ confidence.py — Utility module for epistemic and emotional certainty tagging i
 Provides functions to assess, tag, and overlay confidence levels in bot responses.
 Helps distinguish speculation from grounded facts and detect rising certainty without new evidence.
 Now includes source verification from factCheck.py.
+Drafted collaboratively with Copilot.
 """
 
 import re
