@@ -2,7 +2,7 @@
 
 # 🧠 Delusion Loop Interrupter (DLI)
 
-**Version**: 0.1.1
+**Version**: 0.1.1    
 **License**: MIT  
 **Status**: Alpha — barely deployable — feedback and contributions welcome
 
