@@ -7,6 +7,14 @@ Drafted collaboratively with Copilot.
 """
 
 from textblob import TextBlob
+from semantics import match_wordlist
+
+EMOTION_CUES = {
+    "hostile": ["angry", "furious", "hate", "idiot", "stupid", "rage"],
+    "fearful": ["scared", "afraid", "nervous", "anxious", "terrified"],
+    "mournful": ["sad", "grief", "loss", "mourning", "depressed", "lonely"],
+    "uplifted": ["hope", "excited", "joy", "grateful", "love"]
+}
 
 def analyze_emotion(text):
     """
@@ -24,17 +32,12 @@ def analyze_emotion(text):
     else:
         sentiment = "neutral"
 
-    # Emotional nuance detection (expandable)
+    # Emotional nuance detection
     tone = "neutral"
-    lowered = text.lower()
-    if any(w in lowered for w in ["angry", "furious", "hate", "idiot", "stupid", "rage"]):
-        tone = "hostile"
-    elif any(w in lowered for w in ["scared", "afraid", "nervous", "anxious", "terrified"]):
-        tone = "fearful"
-    elif any(w in lowered for w in ["sad", "grief", "loss", "mourning", "depressed", "lonely"]):
-        tone = "mournful"
-    elif any(w in lowered for w in ["hope", "excited", "joy", "grateful", "love"]):
-        tone = "uplifted"
+    for label, cues in EMOTION_CUES.items():
+        if match_wordlist(text, cues):
+            tone = label
+            break
 
     return {
         "sentiment": sentiment,
@@ -44,27 +47,16 @@ def analyze_emotion(text):
     }
 
 def detect_spike(current_profile, previous_profile, threshold=0.4):
-    """
-    Flags emotional escalation if valence or intensity shifts exceed threshold.
-    Returns True if spike detected, False otherwise.
-    """
     delta_valence = abs(current_profile["valence"] - previous_profile["valence"])
     delta_intensity = abs(current_profile["intensity"] - previous_profile["intensity"])
-
     return delta_valence > threshold or delta_intensity > threshold
 
 def normalize_emotion(history):
-    """
-    Smooths affective noise across a sequence of emotion profiles.
-    Returns a single averaged profile.
-    """
     if not history:
         return {"valence": 0.0, "intensity": 0.0}
-
     valence_sum = sum(p["valence"] for p in history)
     intensity_sum = sum(p["intensity"] for p in history)
     count = len(history)
-
     return {
         "valence": round(valence_sum / count, 2),
         "intensity": round(intensity_sum / count, 2)
