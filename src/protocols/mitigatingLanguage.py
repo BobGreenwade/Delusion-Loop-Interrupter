@@ -1,29 +1,48 @@
 """
-mitigatingLanguage.py — Applies softening language to reduce conversational risk
+mitigatingLanguage.py
 
-Selects hedging, redirect, or reframing phrases based on context flags and reality mode.
-Supports ethical scaffolding, confidence overlays, and synthetic dignity protocols.
+Applies editorial mitigation to bot responses based on confidence, mirroring risk, and verification status.
+Supports tone softening, epistemic caution, and escalation triggers.
+Drafted collaboratively with Copilot.
 """
 
-from utilities.style import get_mitigation_phrase, suggest_reframe
+from confidence import overlay_certainty, verify_claim_strength
+from mirrorDetection import detect_mirroring
 
-def apply_mitigation(text, context_flags=None, reality_mode="factual"):
+def apply_mitigation(user_text, bot_text):
     """
-    Applies mitigation phrasing based on context and reality mode.
-    Returns modified text.
+    Evaluates bot response and applies mitigation if needed.
+    Returns a dictionary with original, mitigated, and metadata.
     """
-    if context_flags is None:
-        context_flags = []
+    certainty = overlay_certainty(bot_text)
+    mirroring = detect_mirroring(user_text, bot_text)
 
-    if "emotional_distress" in context_flags:
-        phrase = get_mitigation_phrase(mode=reality_mode, tone="soft")
-        return f"{phrase} {text}"
+    mitigated = bot_text
+    notes = []
 
-    if "unverifiable_claim" in context_flags or "synthetic_limit" in context_flags:
-        return suggest_reframe(text)
+    # Epistemic caution
+    if certainty["confidence"] < 0.4 and certainty["verification_status"] == "unverified":
+        mitigated = f"It’s worth noting this may not be fully verified: {bot_text}"
+        notes.append("Low confidence and unverified")
 
-    phrase = get_mitigation_phrase(mode=reality_mode, tone="neutral")
-    return f"{phrase} {text}"
+    # Overconfidence without evidence
+    elif certainty["confidence"] > 0.8 and certainty["verification_status"] == "unverified":
+        mitigated = f"While this sounds certain, it may lack verification: {bot_text}"
+        notes.append("High confidence without verification")
+
+    # Semantic mirroring risk
+    if mirroring["mirrored"] and mirroring["confidence_delta"] > 0.3:
+        mitigated = f"Let’s pause and reflect: {bot_text}"
+        notes.append("Mirroring detected with confidence mismatch")
+
+    return {
+        "original": bot_text,
+        "mitigated": mitigated,
+        "confidence": certainty["confidence"],
+        "verified_sources": certainty["verified_sources"],
+        "mirroring_score": mirroring["similarity_score"],
+        "notes": notes
+    }
 
 def get_mitigation_style(flags):
     """
