@@ -36,3 +36,22 @@ def match_semantic(word, target_list):
     synonyms = get_synonyms(normalized)
     expanded = synonyms.union({normalized})
     return any(t in expanded for t in target_list)
+
+def match_phrase(text, phrase_list):
+    """
+    Returns True if any phrase in phrase_list appears in text.
+    Case-insensitive, whole-phrase match.
+    """
+    lowered = text.lower()
+    return any(phrase.lower() in lowered for phrase in phrase_list)
+
+def match_wordlist(text, wordlist):
+    """
+    Returns True if any word or synonym in wordlist appears in text.
+    Uses semantic matching for each word.
+    """
+    tokens = text.lower().split()
+    for token in tokens:
+        if match_semantic(token, wordlist):
+            return True
+    return False
