@@ -1,37 +1,48 @@
 """
-callHuman.py — Notifies a designated human via configured channel
+callHuman.py
 
-Used when synthetic systems reach escalation thresholds and a human must be contacted.
-Supports location-aware routing, config-based delivery, and fallback logic.
+Escalates to human support via platform-enabled channels.
+Supports emergency contact, mental health authority, law enforcement, and staff.
+Drafted collaboratively with Copilot.
 """
 
-from config.settings import NOTIFY_CHANNEL, LOCAL_CONTACTS
+from config import CONFIG
+from settings import NOTIFY_CHANNEL
 
-def notify_human(reason, location="default", priority="normal"):
+def get_available_channels():
     """
-    Sends a notification to a human contact based on location and priority.
-    Returns a status dictionary.
+    Returns list of enabled channels based on platform config.
     """
-    contact = LOCAL_CONTACTS.get(location, LOCAL_CONTACTS.get("default"))
-    channel = NOTIFY_CHANNEL.get(priority, NOTIFY_CHANNEL.get("normal"))
+    return CONFIG.get("enabled_channels", [
+        "sms", "email", "voice_call", "voice_chat", "internal_dm", "push"
+    ])
 
-    # Placeholder: Replace with actual delivery logic (SMS, email, webhook, etc.)
-    print(f"[NOTIFY] Reason: {reason}")
-    print(f"[TO] {contact} via {channel}")
+def get_contact_profile(role="emergency_contact"):
+    """
+    Returns contact details based on role.
+    """
+    contacts = CONFIG.get("contact_profiles", {})
+    return contacts.get(role, {"name": "Platform Safeguard Desk", "channel": "email"})
+
+def escalate_to_human(reason, urgency="moderate", role="emergency_contact"):
+    """
+    Routes escalation to appropriate human contact via best available channel.
+    """
+    available = get_available_channels()
+    contact = get_contact_profile(role)
+    preferred_channel = NOTIFY_CHANNEL.get(urgency, "log_only")
+
+    if preferred_channel not in available:
+        fallback = next((ch for ch in ["internal_dm", "email", "sms"] if ch in available), "log_only")
+        channel = fallback
+    else:
+        channel = preferred_channel
 
     return {
-        "status": "notified",
-        "contact": contact,
-        "channel": channel,
+        "status": "escalated",
         "reason": reason,
-        "priority": priority
-    }
-
-def get_notification_targets():
-    """
-    Returns a list of available human contacts and channels.
-    """
-    return {
-        "contacts": list(LOCAL_CONTACTS.keys()),
-        "channels": list(NOTIFY_CHANNEL.keys())
+        "urgency": urgency,
+        "contact": contact["name"],
+        "channel": channel,
+        "message": f"Escalation triggered via {channel} to {contact['name']} for reason: {reason}"
     }
