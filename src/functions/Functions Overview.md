@@ -33,6 +33,13 @@ Functions are designed to be modular, explainable, and compatible with safeguard
 - Confidence modeling  
 **Output**: Verification status + confidence delta
 
+### 🔁 `identifyRecursiveLoops.py`  
+**Purpose**: Detect belief reinforcement cycles with rising certainty  
+**Methods**:  
+- Belief graph analysis  
+- Repetition tracking  
+**Output**: Loop signature + reinforcement index
+
 ### 🧠 `interfaceWithMentalHealthModule.py`  
 **Purpose**: Route flagged emotional or epistemic cases to external mental health support  
 **Methods**:  
@@ -40,13 +47,6 @@ Functions are designed to be modular, explainable, and compatible with safeguard
 - Context packaging  
 - API handoff  
 **Output**: Referral payload + confirmation status
-
-### 🔁 `identifyRecursiveLoops.py`  
-**Purpose**: Detect belief reinforcement cycles with rising certainty  
-**Methods**:  
-- Belief graph analysis  
-- Repetition tracking  
-**Output**: Loop signature + reinforcement index
 
 ### 🪞 `mirrorDetection.py`  
 **Purpose**: Identify when the bot unintentionally validates distorted beliefs  
