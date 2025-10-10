@@ -1,40 +1,67 @@
 """
-factCheck.py — Performs lightweight fact-checking and source tagging
+factCheck.py
 
-Compares user claims against known facts, trusted sources, or external APIs.
-Supports mitigation phrasing, confidence adjustment, and optional citation overlays.
+Validates claims using a configurable knowledge base and trusted sources.
+Supports general fact-checking, etymology verification, and health myth debunking.
+Drafted collaboratively with Copilot.
 """
 
-# Placeholder: Replace with actual fact-checking API or knowledge base
-KNOWN_FACTS = {
-    "earth is flat": False,
-    "vaccines cause autism": False,
-    "gravity pulls objects downward": True,
-    "Puerto Princesa is in Palawan": True
-}
+from config import CONFIG
 
-def verify_claim(text):
-    """
-    Checks whether a claim matches known facts.
-    Returns a dictionary with verification result and confidence.
-    """
-    text_lower = text.lower().strip()
-    match = KNOWN_FACTS.get(text_lower)
+TRUSTED_SOURCES = CONFIG.get("trusted_sources", [
+    "Snopes",
+    "FactCheck.org",
+    "Wikipedia",
+    "Wiktionary",
+    "WebMD",
+    "NASA",
+    "CDC",
+    "WHO",
+    "PolitiFact",
+    "PubMed"
+])
 
-    if match is True:
-        return {"verified": True, "confidence": 0.95}
-    elif match is False:
-        return {"verified": False, "confidence": 0.95}
-    else:
-        return {"verified": None, "confidence": 0.5}  # Unknown or unverifiable
+def get_source_url(source_name):
+    """
+    Returns the homepage URL for a known source.
+    """
+    urls = {
+        "Snopes": "https://www.snopes.com/",
+        "FactCheck.org": "https://www.factcheck.org/",
+        "Wikipedia": "https://en.wikipedia.org/",
+        "Wiktionary": "https://www.wiktionary.org/",
+        "WebMD": "https://www.webmd.com/",
+        "NASA": "https://www.nasa.gov/",
+        "CDC": "https://www.cdc.gov/",
+        "WHO": "https://www.who.int/",
+        "PolitiFact": "https://www.politifact.com/",
+        "PubMed": "https://pubmed.ncbi.nlm.nih.gov/"
+    }
+    return urls.get(source_name)
 
-def suggest_sources(text):
+def validate_claim(claim, domain="general"):
     """
-    Returns a list of suggested sources for verification.
-    Placeholder: Replace with actual source mapping or citation engine.
+    Constructs search queries for validating a claim across trusted sources.
+    Returns a list of search URLs.
     """
-    if "gravity" in text.lower():
-        return ["https://www.nasa.gov", "https://physics.info/gravity"]
-    if "puerto princesa" in text.lower():
-        return ["https://www.philippines.travel", "https://en.wikipedia.org/wiki/Puerto_Princesa"]
-    return ["https://www.snopes.com", "https://www.factcheck.org"]
+    queries = []
+    for source in TRUSTED_SOURCES:
+        base_url = get_source_url(source)
+        if base_url:
+            search_url = f"{base_url}search?q={claim.replace(' ', '+')}"
+            queries.append({"source": source, "url": search_url})
+    return queries
+
+def suggest_sources(domain="general"):
+    """
+    Returns a filtered list of sources based on domain.
+    """
+    domain_map = {
+        "politics": ["PolitiFact", "FactCheck.org", "Snopes"],
+        "health": ["WebMD", "CDC", "WHO", "PubMed"],
+        "science": ["NASA", "Wikipedia"],
+        "language": ["Wiktionary", "Wikipedia"],
+        "history": ["Wiktionary", "FactCheck.org", "Snopes"],
+        "general": TRUSTED_SOURCES
+    }
+    return domain_map.get(domain, TRUSTED_SOURCES)
