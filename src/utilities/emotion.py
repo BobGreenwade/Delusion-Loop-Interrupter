@@ -1,24 +1,46 @@
 """
-emotion.py — Utility module for affective signal parsing in DLI
+emotion.py
 
-Provides functions to analyze emotional tone, detect escalation, and normalize affective noise.
-Supports mitigation protocols and reality mode detection.
+Detects emotional tone and sentiment from text.
+Supports editorial modulation, synthetic empathy, and tone-aware embedding.
+Drafted collaboratively with Copilot.
 """
 
 from textblob import TextBlob
 
 def analyze_emotion(text):
     """
-    Returns a basic emotion profile based on polarity and subjectivity.
-    Output: dictionary with 'valence' and 'intensity'
+    Returns emotional profile based on sentiment and keyword cues.
     """
     blob = TextBlob(text)
-    valence = blob.sentiment.polarity  # -1.0 (negative) to +1.0 (positive)
-    intensity = abs(blob.sentiment.subjectivity)  # 0.0 (objective) to 1.0 (subjective)
+    polarity = blob.sentiment.polarity
+    subjectivity = blob.sentiment.subjectivity
+
+    # Basic sentiment classification
+    if polarity > 0.3:
+        sentiment = "positive"
+    elif polarity < -0.3:
+        sentiment = "negative"
+    else:
+        sentiment = "neutral"
+
+    # Emotional nuance detection (expandable)
+    tone = "neutral"
+    lowered = text.lower()
+    if any(w in lowered for w in ["angry", "furious", "hate", "idiot", "stupid", "rage"]):
+        tone = "hostile"
+    elif any(w in lowered for w in ["scared", "afraid", "nervous", "anxious", "terrified"]):
+        tone = "fearful"
+    elif any(w in lowered for w in ["sad", "grief", "loss", "mourning", "depressed", "lonely"]):
+        tone = "mournful"
+    elif any(w in lowered for w in ["hope", "excited", "joy", "grateful", "love"]):
+        tone = "uplifted"
 
     return {
-        "valence": round(valence, 2),
-        "intensity": round(intensity, 2)
+        "sentiment": sentiment,
+        "tone": tone,
+        "polarity": round(polarity, 2),
+        "subjectivity": round(subjectivity, 2)
     }
 
 def detect_spike(current_profile, previous_profile, threshold=0.4):
