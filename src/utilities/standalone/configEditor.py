@@ -99,3 +99,13 @@ def remove_trusted_source(source_name):
         print(f"[REMOVED] {source_name}")
     else:
         print(f"[NOT FOUND] {source_name} not in list.")
+
+def toggle_profile_access(grant=True):
+    """
+    Toggles PROFILE_ACCESS_GRANTED flag in config.py.
+    """
+    config = load_config()
+    config["PROFILE_ACCESS_GRANTED"] = "true" if grant else "false"
+    save_config(config)
+    status = "granted" if grant else "revoked"
+    print(f"[PROFILE ACCESS] {status}")
