@@ -11,9 +11,9 @@ import re
 import math
 from factCheck import validate_claim, TRUSTED_SOURCES
 
-low_confidence_markers = ["maybe", "possibly", "some say", "unclear", "allegedly"]
+low_confidence_markers = ["maybe", "possibly", "some say", "unclear", "allegedly", "unverified", theoretically", "hypothetically"]
 high_confidence_markers = ["definitely", "clearly", "proven", "confirmed", "without doubt"]
-negative_confidence_markers = ["disproven", "debunked", "illogical", "false", "fictional", "imaginary", "crackpot"]
+negative_confidence_markers = ["disproven", "debunked", "illogical", "false", "fictional", "imaginary", "crackpot", "absurd"]
 
 def tag_confidence_level(text):
     """
