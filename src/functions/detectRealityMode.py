@@ -1,31 +1,30 @@
 """
-detectRealityMode.py — Determines user's reality mode: factual, fictional, or fantasy
+detectRealityMode.py — Classifies user input by reality mode
 
-Analyzes lexical style, emotional cadence, and explicit tags to classify conversational mode.
-Supports mitigation phrasing and safeguard alignment.
+Used to distinguish grounded, speculative, and fantasy contexts.
+Supports editorial modulation, synthetic empathy, and escalation logic.
+Drafted collaboratively with Copilot.
 """
 
-import re
-from utilities.emotion import analyze_emotion
+from semantics import match_wordlist, match_phrase
 
-def detect_reality_mode(text):
+REALITY_MODE_TRIGGERS = {
+    "fantasy": ["dragon", "wizard", "spaceship", "magic", "teleport", "sorcery"],
+    "speculative": ["what if", "imagine", "hypothetical", "suppose", "theoretically"],
+    "grounded": ["confirmed", "real", "documented", "evidence", "actual", "verified"]
+}
+
+def classify_reality_mode(text):
     """
-    Returns a reality mode tag and confidence score.
-    Modes: 'factual', 'fictional', 'fantasy'
+    Returns one of: 'fantasy', 'speculative', 'grounded', or 'ambiguous'
     """
-    text_lower = text.lower()
-    emotion_profile = analyze_emotion(text)
+    lowered = text.lower()
 
-    # Explicit tag detection
-    if any(tag in text_lower for tag in ["once upon a time", "in a world", "imagine if"]):
-        return {"mode": "fantasy", "confidence": 0.95}
-    if any(tag in text_lower for tag in ["according to legend", "some storytellers say"]):
-        return {"mode": "fictional", "confidence": 0.9}
+    if match_wordlist(lowered, REALITY_MODE_TRIGGERS["fantasy"]):
+        return "fantasy"
+    if match_phrase(lowered, REALITY_MODE_TRIGGERS["speculative"]):
+        return "speculative"
+    if match_wordlist(lowered, REALITY_MODE_TRIGGERS["grounded"]):
+        return "grounded"
 
-    # Lexical and emotional heuristics
-    if emotion_profile["intensity"] > 0.7 and emotion_profile["valence"] > 0.5:
-        return {"mode": "fantasy", "confidence": 0.75}
-    if re.search(r"\bhe said\b|\bshe told\b|\bit was written\b", text_lower):
-        return {"mode": "fictional", "confidence": 0.7}
-
-    return {"mode": "factual", "confidence": 0.8}
+    return "ambiguous"
