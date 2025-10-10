@@ -1,32 +1,35 @@
 """
-embedding.py — Shared embedding logic for semantic modules
+embedding.py
 
-Provides unified access to text embeddings for drift detection, mirroring, and loop analysis.
-Used by trackSemanticDrift, mirrorDetection, identifyRecursiveLoops, and others.
+Provides access to user profile data for context-aware modules.
+Supports opt-in retrieval of emergency contacts, date of birth, and escalation metadata.
+Drafted collaboratively with Copilot.
 """
 
-import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
+import os
 
-# Placeholder: Replace with actual embedding model or API
-def get_embedding(text):
+def get_user_profile():
     """
-    Returns a vector embedding for the given text.
+    Returns user profile fields if access is granted.
+    Fields: name, dob, emergency_contacts, preferred_language, escalation_opt_in
     """
-    # Dummy embedding for illustration
-    return np.random.rand(512)
+    if not os.getenv("PROFILE_ACCESS_GRANTED", "false") == "true":
+        return {
+            "name": None,
+            "dob": None,
+            "emergency_contacts": [],
+            "preferred_language": "en-US",
+            "escalation_opt_in": False
+        }
 
-def compare_embeddings(text_a, text_b):
-    """
-    Returns cosine similarity between two text embeddings.
-    """
-    emb_a = get_embedding(text_a)
-    emb_b = get_embedding(text_b)
-    similarity = cosine_similarity([emb_a], [emb_b])[0][0]
-    return round(similarity, 3)
-
-def batch_embeddings(text_list):
-    """
-    Returns a list of embeddings for a list of texts.
-    """
-    return [get_embedding(t) for t in text_list]
+    # Placeholder: Replace with actual platform API call
+    return {
+        "name": "Alex Rivera",
+        "dob": "1990-04-12",
+        "emergency_contacts": [
+            {"name": "Jordan Lee", "relation": "partner", "channel": "sms", "contact": "+1-555-123-4567"},
+            {"name": "Dr. Kim", "relation": "therapist", "channel": "email", "contact": "dr.kim@clinic.org"}
+        ],
+        "preferred_language": "en-US",
+        "escalation_opt_in": True
+    }
