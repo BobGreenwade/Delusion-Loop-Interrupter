@@ -70,3 +70,32 @@ def validate_config(config):
             print(f" - {e}")
     else:
         print("[CONFIG VALID]")
+
+def list_trusted_sources():
+    config = load_config()
+    sources = config.get("trusted_sources", [])
+    print("[TRUSTED SOURCES]")
+    for s in sources:
+        print(f" - {s}")
+
+def add_trusted_source(source_name):
+    config = load_config()
+    sources = config.get("trusted_sources", [])
+    if source_name not in sources:
+        sources.append(source_name)
+        config["trusted_sources"] = sources
+        save_config(config)
+        print(f"[ADDED] {source_name}")
+    else:
+        print(f"[SKIPPED] {source_name} already present.")
+
+def remove_trusted_source(source_name):
+    config = load_config()
+    sources = config.get("trusted_sources", [])
+    if source_name in sources:
+        sources.remove(source_name)
+        config["trusted_sources"] = sources
+        save_config(config)
+        print(f"[REMOVED] {source_name}")
+    else:
+        print(f"[NOT FOUND] {source_name} not in list.")
