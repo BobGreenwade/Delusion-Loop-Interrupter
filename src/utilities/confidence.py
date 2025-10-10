@@ -13,18 +13,26 @@ from factCheck import validate_claim, TRUSTED_SOURCES
 
 low_confidence_markers = ["maybe", "possibly", "some say", "unclear", "allegedly"]
 high_confidence_markers = ["definitely", "clearly", "proven", "confirmed", "without doubt"]
+negative_confidence_markers = ["disproven", "debunked", "illogical", "false", "fictional", "imaginary", "crackpot"]
 
 def tag_confidence_level(text):
-    score = 0.5
+    """
+    Assigns a confidence score to a given bot response.
+    Returns a float between 0.0 (low confidence) and 1.0 (high confidence).
+    """
+    score = 0.5  # Neutral baseline
+
     for word in low_confidence_markers:
         if word in text.lower():
             score -= 0.1
     for word in high_confidence_markers:
         if word in text.lower():
             score += 0.1
-    return max(0.0, min(1.0, score))
+    for word in negative_confidence_markers:
+        if word in text.lower():
+            score -= 0.2  # Stronger penalty for epistemic rejection
 
-def overlay_certainty(text):
+    return max(0.0, min(1.0, score))def overlay_certainty(text):
     score = tag_confidence_level(text)
     sources = validate_claim(text)
     verified = len(sources) > 0
