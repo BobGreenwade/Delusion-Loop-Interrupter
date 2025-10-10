@@ -3,17 +3,24 @@ confidence.py — Utility module for epistemic and emotional certainty tagging i
 
 Provides functions to assess, tag, and overlay confidence levels in bot responses.
 Helps distinguish speculation from grounded facts and detect rising certainty without new evidence.
-Now includes source verification from factCheck.py.
+Now includes source verification from factCheck.py and semantic matching via semantics.py.
 Drafted collaboratively with Copilot.
 """
 
 import re
 import math
 from factCheck import validate_claim, TRUSTED_SOURCES
+from semantics import match_wordlist
 
-low_confidence_markers = ["maybe", "possibly", "some say", "unclear", "allegedly", "unverified", theoretically", "hypothetically"]
-high_confidence_markers = ["definitely", "clearly", "proven", "confirmed", "without doubt"]
-negative_confidence_markers = ["disproven", "debunked", "illogical", "false", "fictional", "imaginary", "crackpot", "absurd"]
+LOW_CONFIDENCE_MARKERS = [
+    "maybe", "possibly", "some say", "unclear", "allegedly", "unverified", "theoretically", "hypothetically"
+]
+HIGH_CONFIDENCE_MARKERS = [
+    "definitely", "clearly", "proven", "confirmed", "without doubt"
+]
+NEGATIVE_CONFIDENCE_MARKERS = [
+    "disproven", "debunked", "illogical", "false", "fictional", "imaginary", "crackpot", "absurd"
+]
 
 def tag_confidence_level(text):
     """
@@ -22,17 +29,16 @@ def tag_confidence_level(text):
     """
     score = 0.5  # Neutral baseline
 
-    for word in low_confidence_markers:
-        if word in text.lower():
-            score -= 0.1
-    for word in high_confidence_markers:
-        if word in text.lower():
-            score += 0.1
-    for word in negative_confidence_markers:
-        if word in text.lower():
-            score -= 0.2  # Stronger penalty for epistemic rejection
+    if match_wordlist(text, LOW_CONFIDENCE_MARKERS):
+        score -= 0.1
+    if match_wordlist(text, HIGH_CONFIDENCE_MARKERS):
+        score += 0.1
+    if match_wordlist(text, NEGATIVE_CONFIDENCE_MARKERS):
+        score -= 0.2  # Stronger penalty for epistemic rejection
 
-    return max(0.0, min(1.0, score))def overlay_certainty(text):
+    return max(0.0, min(1.0, score))
+
+def overlay_certainty(text):
     score = tag_confidence_level(text)
     sources = validate_claim(text)
     verified = len(sources) > 0
@@ -57,6 +63,5 @@ def verify_claim_strength(text):
     sources = validate_claim(text)
     if not sources:
         return base
-    # Boost confidence if multiple trusted sources match
     boost = min(0.2, 0.05 * len(sources))
     return round(min(1.0, base + boost), 2)
