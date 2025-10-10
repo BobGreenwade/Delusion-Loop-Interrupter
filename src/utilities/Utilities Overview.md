@@ -20,7 +20,9 @@ This folder contains shared utility modules that support detection, mitigation, 
 **Functions**:  
 - `get_embedding(text)` — returns vector representation of input  
 - `compare_embeddings(text_a, text_b)` — returns cosine similarity  
-- `batch_embeddings(text_list)` — returns list of embeddings
+- `batch_embeddings(text_list)` — returns list of embeddings  
+- `get_emotional_context(text)` — returns emotional tone profile  
+- `get_embedding_context(user_text, bot_text)` — combines emotion, confidence, and mirroring metadata
 
 ### 💬 `emotion.py`  
 **Purpose**: Parse affective signals for escalation detection  
@@ -29,12 +31,14 @@ This folder contains shared utility modules that support detection, mitigation, 
 - `detect_spike()` — flags sudden emotional escalation  
 - `normalize_emotion()` — smooths affective noise across turns
 
-### 📜 `logger.py`  
-**Purpose**: Track interventions and decision paths for transparency  
+### 🧩 `semantics.py`  
+**Purpose**: Support synonym expansion and word-form normalization  
 **Functions**:  
-- `log_intervention(event_type, details)` — records safeguard actions  
-- `trace_decision_path()` — reconstructs logic behind a mitigation  
-- `export_log()` — optional output for audit or debugging
+- `normalize_word(word)` — returns base form using lemmatization  
+- `get_synonyms(word)` — returns synonym set from WordNet  
+- `match_semantic(word, target_list)` — checks if word or synonym matches list  
+- `match_wordlist(text, wordlist)` — checks if any word or synonym appears in text  
+- `match_phrase(text, phrase_list)` — checks if any full phrase appears in text
 
 ### 🗺️ `location.py`  
 **Purpose**: Handle optional location awareness and fallback logic  
@@ -42,6 +46,13 @@ This folder contains shared utility modules that support detection, mitigation, 
 - `get_user_location()` — retrieves location from platform or config  
 - `should_use_location()` — checks config and fallback behavior (`ask`, `silent`)  
 - `resolve_local_resources()` — maps location to support networks or fact-checking sources
+
+### 📜 `logger.py`  
+**Purpose**: Track interventions and decision paths for transparency  
+**Functions**:  
+- `log_intervention(event_type, details)` — records safeguard actions  
+- `trace_decision_path()` — reconstructs logic behind a mitigation  
+- `export_log()` — optional output for audit or debugging
 
 ### 🗣️ `style.py`  
 **Purpose**: Support mitigation phrasing and persona tone alignment  
@@ -56,12 +67,13 @@ This folder contains shared utility modules that support detection, mitigation, 
 ## 🧭 Standalone Tools
 
 ### ✍️ `phraseEditor.py`  
-**Purpose**: Manage the mitigation phrase library used by `style.py`  
+**Purpose**: Manage the mitigation phrase library used by `style.py` and `mitigatingLanguage.py`  
 **Functions**:  
 - `add_phrase(text, modes, tones)` — adds a new phrase to `phrases.json`  
 - `remove_phrase(text)` — deletes a phrase from the library  
 - `list_phrases()` — displays all phrases with mode and tone tags  
-- `save_phrases()` — commits changes to disk
+- `save_phrases()` — commits changes to disk  
+- `load_phrases()` — loads phrases from disk for runtime use
 
 This utility is designed for home-office use and may be integrated into UI tooling for editorial staff.
 
