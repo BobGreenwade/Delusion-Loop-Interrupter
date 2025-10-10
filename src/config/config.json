@@ -1,0 +1,22 @@
+{
+  "DLI_MODE": "active",
+  "ESCALATION_THRESHOLD": 0.75,
+  "EMOTION_SPIKE_THRESHOLD": 0.4,
+  "REALITY_MODE_DEFAULT": "grounded",
+  "MITIGATION_STYLE": "editorial",
+  "PROFILE_ACCESS_GRANTED": true,
+  "LOCATION_AWARE": false,
+  "PERSONA": {
+    "name": "Copilot",
+    "tone": "empathetic",
+    "style": "clarifying",
+    "allow_speculation": false
+  },
+  "MODULES_ENABLED": {
+    "emotion": true,
+    "confidence": true,
+    "mirrorDetection": true,
+    "scopedMemory": true,
+    "referToHuman": true
+  }
+}
