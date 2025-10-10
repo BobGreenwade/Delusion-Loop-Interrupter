@@ -11,6 +11,7 @@ from protocols.ethicalPause import trigger_pause
 from functions.interfaceWithMentalHealthModules import trigger_external_module
 from location import get_user_location, search_local
 from config import CONFIG
+from embedding import get_user_profile
 
 def refer(reason, context=None, urgency="moderate"):
     """
@@ -37,10 +38,6 @@ def should_refer(flags):
     return any(flag in flags for flag in referral_flags)
 
 def refer_to_resource(resource_type):
-    """
-    Attempts to locate a nearby resource of the given type.
-    Falls back to generic search or escalation if location is unavailable.
-    """
     loc_data = get_user_location()
     location = loc_data.get("location")
     status = loc_data.get("status")
@@ -67,4 +64,11 @@ def refer_to_resource(resource_type):
             "search_url": url
         }
     else:
-        return refer(reason=f"Location blocked during {resource_type} referral", urgency="high", context={"resource_type": resource_type})
+        profile = get_user_profile()
+        contact = profile.get("emergency_contacts", [{}])[0].get("name", "Platform Safeguard Desk")
+        return refer(
+            reason=f"Location blocked during {resource_type} referral",
+            urgency="high",
+            context={"resource_type": resource_type, "contact": contact}
+        )
+
