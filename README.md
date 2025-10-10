@@ -58,6 +58,10 @@ Reusable tools support detection and protocol logic:
 - `logger.py` — intervention tracking  
 - `semantics.py` — synonym expansion and word-form matching  
 - `style.py` — mitigation phrasing  
+
+And standalone utilities:
+
+- `configEditor.py` - standalone configuration editor
 - `phraseEditor.py` — standalone editorial tool
 
 See [`Utilities Overview`](./src/utilities/Utilities%20Overview.md) for details.
@@ -104,7 +108,8 @@ DLI is built with the following principles:
 ## 📎 Project Links
 
 - [Credits](./Credits.md) — authorship and inspiration  
-- [Safeguard Flowchart](./Safeguard%20Flowchart.md) — escalation logic  
+- [Safeguard Flowchart](./Safeguard%20Flowchart.md) — escalation logic
+   
 - [Code of Conduct](./Code%20of%20Conduct.md) — collaboration principles  
 - [Contributing](./Contributing.md) — guidelines for contributors  
 
