@@ -8,13 +8,24 @@ Supports mitigation and scoped memory protocols.
 from utilities.confidence import tag_confidence_level
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
+import hashlib
 
-# Placeholder: Replace with actual embedding model
-def get_embedding(text):
+def get_embedding(text, dim=512):
     """
-    Returns a vector embedding for the given text.
+    Returns a pseudo-embedding vector for the given text.
+    Uses token hashing for deterministic output.
+    Replace with real model later.
     """
-    return np.random.rand(512)
+    tokens = text.lower().split()
+    vector = np.zeros(dim)
+
+    for token in tokens:
+        h = int(hashlib.md5(token.encode()).hexdigest(), 16)
+        index = h % dim
+        vector[index] += 1
+
+    norm = np.linalg.norm(vector)
+    return vector / norm if norm != 0 else vector
 
 def detect_mirroring(user_text, bot_text, confidence_threshold=0.7, similarity_threshold=0.85):
     """
