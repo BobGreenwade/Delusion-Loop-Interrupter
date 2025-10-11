@@ -9,20 +9,37 @@ Drafted collaboratively with Copilot.
 from confidence import overlay_certainty
 from mirrorDetection import detect_mirroring
 from phraseEditor import load_phrases
-from style import get_mitigation_phrase
+from profile import get_characteristic, get_user_profile
+from style import select_mitigation_phrase
 from config import load_config
 
 CONFIG = load_config()
 
-def select_mitigation(emotion_vector, confidence_score):
-    # Prioritize tone based on dominant emotion
-    dominant = [e for e, v in emotion_vector.items() if v == 1]
-    tone = "empathetic" if "sadness" in dominant or "fear" in dominant else CONFIG["PERSONA"]["tone"]
+def select_mitigation(username, emotion_vector, confidence_score):
+    emotionality = get_characteristic(username, "emotionality") or 50
+    concern_level = get_characteristic(username, "concern_level") or 0
+    responsiveness = get_characteristic(username, "responsiveness") or 75
+    strategies = get_user_profile(username).get("strategies", ["default"])
 
-    # Adjust mode based on confidence
+    # Tone logic
+    if emotionality > 70 and "anger" in emotion_vector:
+        tone = "direct"
+    elif "sadness" in emotion_vector or emotionality > 70:
+        tone = "gentle"
+    elif concern_level > 50:
+        tone = "editorial"
+    else:
+        tone = CONFIG["PERSONA"]["tone"]
+
+    # Mode logic
     mode = "speculative" if confidence_score < 0.5 else "grounded"
 
-    return get_mitigation_phrase(mode, tone)
+    # Strategy logic
+    phrase = select_mitigation_phrase(modes=[mode], tones=[tone])
+    if not phrase and "direct_callout" in strategies:
+        phrase = "Settle down, dipstick."  # fallback for high-emotion direct strategy
+
+    return phrase or "Let's take a breath and reframe."
     
 def select_mitigation_phrase(modes=[], tones=[]):
     """
