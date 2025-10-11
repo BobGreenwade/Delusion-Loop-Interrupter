@@ -1,63 +1,52 @@
 """
-emotion.py
+emotion.py — Plutchik-based emotional analysis
 
-Detects emotional tone and sentiment from text.
-Supports editorial modulation, synthetic empathy, and tone-aware embedding.
+Detects emotional signals using Plutchik's 8-core model.
+Returns emotion vector and intensity score for editorial modulation.
 Drafted collaboratively with Copilot.
 """
 
-from textblob import TextBlob
 from semantics import match_wordlist
+from textblob import TextBlob
 
-EMOTION_CUES = {
-    "hostile": ["angry", "furious", "hate", "idiot", "stupid", "rage"],
-    "fearful": ["scared", "afraid", "nervous", "anxious", "terrified"],
-    "mournful": ["sad", "grief", "loss", "mourning", "depressed", "lonely"],
-    "uplifted": ["hope", "excited", "joy", "grateful", "love"]
+PLUTCHIK_EMOTIONS = {
+    "joy": ["happy", "joyful", "elated", "content", "cheerful"],
+    "trust": ["safe", "secure", "reliable", "faith", "confident"],
+    "fear": ["afraid", "scared", "terrified", "anxious", "nervous"],
+    "surprise": ["shocked", "amazed", "startled", "unexpected", "astonished"],
+    "sadness": ["sad", "depressed", "grief", "loss", "lonely"],
+    "disgust": ["gross", "repulsed", "nauseated", "sickened", "distaste"],
+    "anger": ["angry", "furious", "rage", "hate", "irritated"],
+    "anticipation": ["excited", "eager", "curious", "hopeful", "expecting"]
 }
 
+def get_emotion_vector(text):
+    """
+    Returns a dictionary with Plutchik emotions and their presence (0 or 1).
+    """
+    vector = {emotion: 0 for emotion in PLUTCHIK_EMOTIONS}
+    for emotion, cues in PLUTCHIK_EMOTIONS.items():
+        if match_wordlist(text, cues):
+            vector[emotion] = 1
+    return vector
+
+def emotion_intensity(vector):
+    """
+    Returns an intensity score based on number of active emotions.
+    """
+    active = sum(vector.values())
+    return round(active / len(vector), 2)
+
 def analyze_emotion(text):
-    """
-    Returns emotional profile based on sentiment and keyword cues.
-    """
     blob = TextBlob(text)
     polarity = blob.sentiment.polarity
     subjectivity = blob.sentiment.subjectivity
-
-    # Basic sentiment classification
-    if polarity > 0.3:
-        sentiment = "positive"
-    elif polarity < -0.3:
-        sentiment = "negative"
-    else:
-        sentiment = "neutral"
-
-    # Emotional nuance detection
-    tone = "neutral"
-    for label, cues in EMOTION_CUES.items():
-        if match_wordlist(text, cues):
-            tone = label
-            break
+    vector = get_emotion_vector(text)
+    intensity = emotion_intensity(vector)
 
     return {
-        "sentiment": sentiment,
-        "tone": tone,
+        "emotion_vector": vector,
+        "intensity": intensity,
         "polarity": round(polarity, 2),
         "subjectivity": round(subjectivity, 2)
-    }
-
-def detect_spike(current_profile, previous_profile, threshold=0.4):
-    delta_valence = abs(current_profile["valence"] - previous_profile["valence"])
-    delta_intensity = abs(current_profile["intensity"] - previous_profile["intensity"])
-    return delta_valence > threshold or delta_intensity > threshold
-
-def normalize_emotion(history):
-    if not history:
-        return {"valence": 0.0, "intensity": 0.0}
-    valence_sum = sum(p["valence"] for p in history)
-    intensity_sum = sum(p["intensity"] for p in history)
-    count = len(history)
-    return {
-        "valence": round(valence_sum / count, 2),
-        "intensity": round(intensity_sum / count, 2)
     }
