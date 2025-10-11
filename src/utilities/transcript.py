@@ -46,11 +46,11 @@ def append_to_transcript(speaker, text, metadata=None):
             "metadata": metadata or {}
         }
         transcript_log.append(entry)
-
+        
 def save_transcript(username="User"):
     if not transcript_active:
         print("[TRANSCRIPT] No active transcript to save.")
-        return
+        return None
 
     timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     filename = f"{username}_{timestamp}.txt"
@@ -64,7 +64,9 @@ def save_transcript(username="User"):
             f.write(line + "\n")
 
     print(f"[TRANSCRIPT] Saved to {filename}")
+    log_transcript_creation(filename, transcript_trigger)  # See below
     reset_transcript()
+    return filename
 
 def reset_transcript():
     global transcript_log, transcript_active, transcript_trigger
