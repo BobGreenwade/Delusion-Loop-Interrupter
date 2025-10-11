@@ -9,6 +9,7 @@ Drafted collaboratively with Copilot.
 import os
 from emotion import analyze_emotion
 from confidence import overlay_certainty
+from confidence import tag_confidence_level
 from mirrorDetection import detect_mirroring
 
 def get_user_profile():
@@ -54,4 +55,22 @@ def get_embedding_context(user_text, bot_text):
         "mirroring": mirroring["mirrored"],
         "mirroring_score": mirroring["similarity_score"],
         "confidence_delta": mirroring["confidence_delta"]
+    }
+
+def get_emotional_context(text):
+    profile = analyze_emotion(text)
+    return {
+        "emotions": profile["emotion_vector"],
+        "intensity": profile["intensity"]
+    }
+
+def get_embedding_context(user_text, bot_text):
+    user_emotion = analyze_emotion(user_text)
+    bot_emotion = analyze_emotion(bot_text)
+    confidence = tag_confidence_level(bot_text)
+
+    return {
+        "user_emotion": user_emotion["emotion_vector"],
+        "bot_emotion": bot_emotion["emotion_vector"],
+        "bot_confidence": confidence
     }
