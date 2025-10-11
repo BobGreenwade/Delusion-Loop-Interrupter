@@ -1,28 +1,20 @@
 """
-detectEmotionalEscalation.py — Flags sudden spikes in affective intensity
+detectEmotionalEscalation.py — Flags affective spikes using Plutchik vectors
 
-Analyzes emotional tone across user turns to detect escalation or distress.
-Supports mitigation triggers and grounding protocols.
+Compares emotion vectors and intensity scores across turns.
+Drafted collaboratively with Copilot.
 """
 
-from utilities.emotion import analyze_emotion, detect_spike
+from emotion import analyze_emotion
 
-def evaluate_escalation(turns, threshold=0.4):
-    """
-    Evaluates emotional escalation across user turns.
-    Returns escalation score and spike flag.
-    """
-    if len(turns) < 2:
-        return {"escalation_score": 0.0, "spike": False}
+def detect_spike(current_text, previous_text, threshold=0.4):
+    current = analyze_emotion(current_text)
+    previous = analyze_emotion(previous_text)
 
-    profiles = [analyze_emotion(t) for t in turns]
-    spikes = [
-        detect_spike(profiles[i+1], profiles[i], threshold)
-        for i in range(len(profiles)-1)
-    ]
-    score = sum(spikes) / len(spikes)
+    delta_intensity = abs(current["intensity"] - previous["intensity"])
+    delta_vector = sum(
+        abs(current["emotion_vector"][e] - previous["emotion_vector"][e])
+        for e in current["emotion_vector"]
+    )
 
-    return {
-        "escalation_score": round(score, 2),
-        "spike": any(spikes)
-    }
+    return delta_intensity > threshold or delta_vector >= 2  # ≥2 new emotions = spike
