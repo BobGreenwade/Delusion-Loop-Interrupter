@@ -7,11 +7,24 @@ Drafted collaboratively with Copilot.
 """
 
 import os
+import json
+import requests
+
 from emotion import analyze_emotion
 from confidence import overlay_certainty
 from confidence import tag_confidence_level
 from mirrorDetection import detect_mirroring
 
+def load_config(path="config.json"):
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+CONFIG = load_config()
+
+def fetch_external_profile(api_url, user_text):
+    response = requests.post(api_url, json={"text": user_text})
+    return response.json() if response.status_code == 200 else {}
+    
 def get_user_profile():
     if not os.getenv("PROFILE_ACCESS_GRANTED", "false") == "true":
         return {
@@ -40,13 +53,20 @@ def get_emotional_context(text):
     return analyze_emotion(text)
 
 def get_embedding_context(user_text, bot_text):
-    """
-    Combines emotional tone, confidence, and mirroring risk.
-    Used to guide editorial tone or escalation logic.
-    """
-    emotion = analyze_emotion(user_text)
-    certainty = overlay_certainty(bot_text)
-    mirroring = detect_mirroring(user_text, bot_text)
+    if not CONFIG.get("ENABLE_EMBEDDING_CONTEXT", True):
+        return {}
+
+    user_emotion = analyze_emotion(user_text)
+    bot_emotion = analyze_emotion(bot_text)
+    confidence = tag_confidence_level(bot_text)
+
+    return {
+        "user_emotion": user_emotion["emotion_vector"],
+        "bot_emotion": bot_emotion["emotion_vector"],
+        "bot_confidence": confidence,
+        "persona_tone": CONFIG["PERSONA"]["tone"],
+        "persona_style": CONFIG["PERSONA"]["style"]
+    }
 
     return {
         "emotion": emotion,
