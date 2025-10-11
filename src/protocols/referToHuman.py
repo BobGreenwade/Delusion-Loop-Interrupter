@@ -1,8 +1,8 @@
 """
-referToHuman.py
+referToHuman.py — Escalation logic for human referral
 
-Triggers handoff to human support when synthetic limits are reached,
-and routes users to verified local resources when appropriate.
+Triggers referral based on emotional intensity or loop detection.
+Routes users to verified local resources when appropriate.
 Supports transparency, scoped memory, and external escalation.
 Drafted collaboratively with Copilot.
 """
@@ -12,7 +12,21 @@ from functions.interfaceWithMentalHealthModules import trigger_external_module
 from location import get_user_location, search_local
 from config import CONFIG
 from embedding import get_user_profile
+from config import load_config
 
+CONFIG = load_config()
+
+def should_refer(emotion_profile, loop_detected=False):
+    intensity = emotion_profile.get("intensity", 0)
+    distress_emotions = ["sadness", "fear", "anger"]
+    active_distress = any(emotion_profile["emotion_vector"].get(e, 0) for e in distress_emotions)
+
+    return (
+        intensity > CONFIG["ESCALATION_THRESHOLD"]
+        or (loop_detected and active_distress)
+        or CONFIG["PERSONA"]["allow_speculation"] is False and "surprise" in emotion_profile["emotion_vector"]
+    )
+    
 def refer(reason, context=None, urgency="moderate"):
     """
     Initiates a handoff to a human operator or support system.
@@ -29,13 +43,6 @@ def refer(reason, context=None, urgency="moderate"):
         "urgency": urgency,
         "context": context
     }
-
-def should_refer(flags):
-    """
-    Evaluates content flags to determine if referral is needed.
-    """
-    referral_flags = ["synthetic_limit", "emotional_distress", "ethical_boundary", "loop_detected"]
-    return any(flag in flags for flag in referral_flags)
 
 def refer_to_resource(resource_type):
     loc_data = get_user_location()
