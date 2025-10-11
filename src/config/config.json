@@ -6,6 +6,8 @@
   "MITIGATION_STYLE": "editorial",
   "PROFILE_ACCESS_GRANTED": true,
   "LOCATION_AWARE": false,
+  "EXTERNAL_PROFILE_API": "https://your-api.com/profile",
+  "ENABLE_EMBEDDING_CONTEXT": true
   "PERSONA": {
     "name": "Copilot",
     "tone": "empathetic",
