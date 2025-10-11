@@ -9,7 +9,21 @@ Drafted collaboratively with Copilot.
 from confidence import overlay_certainty
 from mirrorDetection import detect_mirroring
 from phraseEditor import load_phrases
+from style import get_mitigation_phrase
+from config import load_config
 
+CONFIG = load_config()
+
+def select_mitigation(emotion_vector, confidence_score):
+    # Prioritize tone based on dominant emotion
+    dominant = [e for e, v in emotion_vector.items() if v == 1]
+    tone = "empathetic" if "sadness" in dominant or "fear" in dominant else CONFIG["PERSONA"]["tone"]
+
+    # Adjust mode based on confidence
+    mode = "speculative" if confidence_score < 0.5 else "grounded"
+
+    return get_mitigation_phrase(mode, tone)
+    
 def select_mitigation_phrase(modes=[], tones=[]):
     """
     Selects a mitigation phrase from phrases.json matching given modes and tones.
