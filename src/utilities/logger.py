@@ -44,3 +44,13 @@ def export_log(filepath="dli_log.json"):
     except Exception as e:
         print(f"Export failed: {e}")
         return False
+
+def log_transcript_creation(filename, trigger_type):
+    timestamp = datetime.now().isoformat()
+    log_entry = {
+        "event": "transcript_created",
+        "filename": filename,
+        "trigger": trigger_type,
+        "timestamp": timestamp
+    }
+    append_to_log(log_entry)
