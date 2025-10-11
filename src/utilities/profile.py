@@ -48,6 +48,7 @@ def create_user_profile(username, seed_text="Hello, I’m new here."):
         "responsiveness": 75
     },
     "external_profile": external,
+    "strategies": ["default"]
     "assertions": [],
     "facts": {}
 }
