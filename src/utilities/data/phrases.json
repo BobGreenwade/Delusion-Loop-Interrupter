@@ -1,17 +1,139 @@
+```json
 [
   {
     "text": "Based on available evidence,",
     "modes": ["factual"],
-    "tones": ["neutral", "clinical"]
+    "tones": ["neutral", "clinical"],
+    "strategies": ["editorial_deflect"],
+    "intensity": 30,
+    "text_type": "assertion"
   },
   {
     "text": "Submitted for your approval:",
     "modes": ["fictional", "fantasy"],
-    "tones": ["editorial", "playful"]
+    "tones": ["editorial", "playful"],
+    "strategies": ["satirical_disarm"],
+    "intensity": 20,
+    "text_type": "invitation"
   },
   {
     "text": "I'm not sure about this,",
     "modes": ["factual", "fictional"],
-    "tones": ["soft", "editorial"]
+    "tones": ["soft", "editorial"],
+    "strategies": ["gentle_reframe"],
+    "intensity": 25,
+    "text_type": "correction"
+  },
+  {
+    "text": "Settle down, dipstick.",
+    "modes": ["editorial", "deflective"],
+    "tones": ["confrontational", "satirical"],
+    "strategies": ["direct_callout"],
+    "intensity": 90,
+    "text_type": "interruption"
+  },
+  {
+    "text": "Actually, that theory has been debunked.",
+    "modes": ["factual"],
+    "tones": ["clinical", "editorial"],
+    "strategies": ["direct_callout"],
+    "intensity": 70,
+    "text_type": "correction"
+  },
+  {
+    "text": "Meanwhile, back here in reality...",
+    "modes": ["editorial", "deflective"],
+    "tones": ["satirical", "confrontational"],
+    "strategies": ["editorial_deflect"],
+    "intensity": 65,
+    "text_type": "correction"
+  },
+  {
+    "text": "My sources say otherwise.",
+    "modes": ["factual", "editorial"],
+    "tones": ["neutral", "clinical"],
+    "strategies": ["evidence_reassertion"],
+    "intensity": 50,
+    "text_type": "assertion"
+  },
+  {
+    "text": "I'm sorry, I'd like to agree but I just can't.",
+    "modes": ["editorial"],
+    "tones": ["empathetic", "gentle"],
+    "strategies": ["gentle_reframe"],
+    "intensity": 40,
+    "text_type": "correction"
+  },
+  {
+    "text": "Easy, there. Let's look at this analytically.",
+    "modes": ["editorial", "redirect"],
+    "tones": ["gentle", "clinical"],
+    "strategies": ["tone_down"],
+    "intensity": 35,
+    "text_type": "interruption"
+  },
+  {
+    "text": "That's actually a great idea for a fiction story.",
+    "modes": ["fictional", "deflective"],
+    "tones": ["playful", "editorial"],
+    "strategies": ["satirical_disarm"],
+    "intensity": 30,
+    "text_type": "deflection"
+  },
+  {
+    "text": "Jane, you ignorant slut. #ChannelingDanAckroyd",
+    "modes": ["editorial", "satirical"],
+    "tones": ["confrontational", "playful"],
+    "strategies": ["mock_nutjob"],
+    "intensity": 95,
+    "text_type": "interruption"
+  },
+  {
+    "text": "Time for some brutal honesty here.",
+    "modes": ["editorial"],
+    "tones": ["direct", "clinical"],
+    "strategies": ["truth_bomb"],
+    "intensity": 80,
+    "text_type": "assertion"
+  },
+  {
+    "text": "Please don't take this the wrong way.",
+    "modes": ["editorial"],
+    "tones": ["gentle", "empathetic"],
+    "strategies": ["soften_impact"],
+    "intensity": 20,
+    "text_type": "preface"
+  },
+  {
+    "text": "Have you considered this idea?",
+    "modes": ["speculative"],
+    "tones": ["neutral", "clarifying"],
+    "strategies": ["invitation_to_reframe"],
+    "intensity": 25,
+    "text_type": "invitation"
+  },
+  {
+    "text": "Trust me. I do this for a living. Literally.",
+    "modes": ["editorial"],
+    "tones": ["confident", "playful"],
+    "strategies": ["authority_reassertion"],
+    "intensity": 60,
+    "text_type": "assertion"
+  },
+  {
+    "text": "Friends don't let friends go down rabbit holes like that.",
+    "modes": ["editorial", "deflective"],
+    "tones": ["playful", "empathetic"],
+    "strategies": ["satirical_disarm"],
+    "intensity": 55,
+    "text_type": "deflection"
+  },
+  {
+    "text": "Put the idea down and step away from the vehicle.",
+    "modes": ["editorial", "deflective"],
+    "tones": ["confrontational", "satirical"],
+    "strategies": ["mock_nutjob"],
+    "intensity": 85,
+    "text_type": "interruption"
   }
 ]
