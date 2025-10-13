@@ -7,7 +7,7 @@
   "PROFILE_ACCESS_GRANTED": true,
   "LOCATION_AWARE": false,
   "EXTERNAL_PROFILE_API": "https://your-api.com/profile",
-  "ENABLE_EMBEDDING_CONTEXT": true
+  "ENABLE_EMBEDDING_CONTEXT": true,
   "PERSONA": {
     "name": "Copilot",
     "tone": "empathetic",
@@ -20,5 +20,20 @@
     "mirrorDetection": true,
     "scopedMemory": true,
     "referToHuman": true
+  },
+  "persona_resolution": {
+    "strategy": "directory_scan",
+    "base_path": "personas/",
+    "file_patterns": ["*.backstory.json", "*.directives.md", "*.persona.txt"]
+  },
+  "chat_history": {
+    "path": "logs/",
+    "filename_pattern": "{persona}_chat.log",
+    "scan_limit": 50
+  },
+  "llm": {
+    "endpoint": "http://localhost:5000/paraphrase",
+    "model": "gpt-4",
+    "temperature": 0.7
   }
 }
