@@ -9,7 +9,9 @@ Drafted collaboratively with Copilot.
 from confidence import overlay_certainty
 from mirrorDetection import detect_mirroring
 from phraseEditor import load_phrases
-from profile import get_characteristic, get_user_profile
+from emotion import analyze_emotion
+from paraphrase import paraphrase
+from profile import get_user_profile
 from style import select_mitigation_phrase
 from config import load_config
 
@@ -39,8 +41,12 @@ def select_mitigation(username, emotion_vector, confidence_score):
     if not phrase and "direct_callout" in strategies:
         phrase = "Settle down, dipstick."  # fallback for high-emotion direct strategy
 
-    return phrase or "Let's take a breath and reframe."
-    
+    tone = map_emotion_to_tone(analyze_emotion(user_input))
+    persona = get_user_profile(username).get("persona", "default")
+    raw_phrase = get_mitigation_phrase(mode, tone, style)
+    final_phrase = paraphrase(raw_phrase, persona, tone, style)
+    return final_phrase
+
 def select_mitigation_phrase(modes=[], tones=[]):
     """
     Selects a mitigation phrase from phrases.json matching given modes and tones.
