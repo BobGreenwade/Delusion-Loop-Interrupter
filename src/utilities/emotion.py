@@ -50,3 +50,11 @@ def analyze_emotion(text):
         "polarity": round(polarity, 2),
         "subjectivity": round(subjectivity, 2)
     }
+
+def map_emotion_to_tone(emotion_vector):
+    with open("toneMap.json", "r") as f:
+        tone_map = json.load(f)
+    for emotion in emotion_vector:
+        if emotion in tone_map:
+            return tone_map[emotion][0]
+    return "neutral"
