@@ -1,0 +1,9 @@
+{
+  "anger": ["confrontational", "editorial"],
+  "frustration": ["gentle", "empathetic"],
+  "confusion": ["clarifying"],
+  "sadness": ["gentle", "soft"],
+  "playful": ["satirical", "soft"],
+  "confidence": ["clinical", "direct"],
+  "neutral": ["neutral"]
+}
