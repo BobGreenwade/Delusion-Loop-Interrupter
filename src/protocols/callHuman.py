@@ -12,6 +12,7 @@ from settings import NOTIFY_CHANNEL
 from embedding import get_user_profile
 from transcript import save_transcript
 from emotion import analyze_emotion
+from emotion import map_emotion_to_tone
 from paraphrase import paraphrase
 
 def get_available_channels():
