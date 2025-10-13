@@ -10,6 +10,7 @@ from confidence import overlay_certainty
 from mirrorDetection import detect_mirroring
 from phraseEditor import load_phrases
 from emotion import analyze_emotion
+from emotion import map_emotion_to_tone
 from paraphrase import paraphrase
 from profile import get_user_profile
 from style import select_mitigation_phrase
