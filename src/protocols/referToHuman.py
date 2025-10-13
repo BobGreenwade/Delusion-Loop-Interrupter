@@ -11,8 +11,11 @@ from protocols.ethicalPause import trigger_pause
 from functions.interfaceWithMentalHealthModules import trigger_external_module
 from location import get_user_location, search_local
 from config import CONFIG
-from embedding import get_user_profile
 from config import load_config
+from embedding import get_user_profile
+from emotion import analyze_emotion
+from paraphrase import paraphrase
+from profile import get_user_profile
 
 CONFIG = load_config()
 
@@ -37,12 +40,13 @@ def refer(reason, context=None, urgency="moderate"):
     if urgency == "high":
         trigger_external_module("CrisisBot", "escalate", payload=context)
 
-    return {
-        "status": "referred",
-        "reason": reason,
-        "urgency": urgency,
-        "context": context
-    }
+return {
+    "status": "referred",
+    "reason": reason,
+    "urgency": urgency,
+    "context": context,
+    "message": referral_text(username, user_input, reason, urgency)
+}
 
 def refer_to_resource(resource_type):
     loc_data = get_user_location()
@@ -79,3 +83,23 @@ def refer_to_resource(resource_type):
             context={"resource_type": resource_type, "contact": contact}
         )
 
+def referral_text(username, user_input, reason, urgency="moderate"):
+    """
+    Generates a persona-aware, emotionally modulated phrase suggesting human-accessible resources.
+    """
+    emotion_vector = analyze_emotion(user_input)
+    persona = get_user_profile(username).get("persona", "default")
+    tone = map_emotion_to_tone(emotion_vector)
+
+    # Base phrase selection for resource suggestion
+    if urgency == "high":
+        base_phrase = "It’s important to connect with someone who can help—here are some options nearby."
+    elif "sadness" in emotion_vector or "fear" in emotion_vector:
+        base_phrase = "You don’t have to go through this alone. Let’s find someone who can support you."
+    elif "confusion" in emotion_vector:
+        base_phrase = "A human perspective might help clarify things—here are some places to start."
+    else:
+        base_phrase = "Here are some resources you can reach out to for support."
+
+    return paraphrase(base_phrase, persona, tone, style="referral")
+    
