@@ -14,6 +14,7 @@ from config import CONFIG
 from config import load_config
 from embedding import get_user_profile
 from emotion import analyze_emotion
+from emotion import map_emotion_to_tone
 from paraphrase import paraphrase
 from profile import get_user_profile
 
