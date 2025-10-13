@@ -1,7 +1,11 @@
 """
-paraphrase.py - prompts the hosting LLM to put standard text into the persona's own words
+paraphrase.py - Prompts the hosting LLM to put standard text into the persona's own words
 
+This module dynamically constructs persona-aware prompts using config-driven descriptors,
+recent chat history, and emotional tone cues. It sends those prompts to the hosting LLM
+to generate paraphrased output that reflects the persona's voice, rhythm, and editorial style.
 
+Drafted collaboratively with Copilot.
 """
 
 # 📦 Imports & Constants
