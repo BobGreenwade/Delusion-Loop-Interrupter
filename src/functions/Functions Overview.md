@@ -4,11 +4,18 @@
 
 This folder contains the core detection logic for the Delusion Loop Interrupter (DLI). Each function monitors conversational patterns and flags potential delusional reinforcement, emotional escalation, or reality misalignment.
 
-Functions are designed to be modular, explainable, and compatible with safeguard protocols and persona engines.
+Functions are designed to be modular, explainable, and compatible with safeguard protocols, mitigation layers, and persona engines.
 
 ---
 
 ## 📁 Module Index
+
+### 🧠 `analyze_emotion()`  
+**Purpose**: Detect emotional signals and editorial intensity  
+**Methods**:  
+- Plutchik model keyword matching  
+- Sentiment polarity and subjectivity  
+**Output**: Emotion vector + intensity + polarity + subjectivity
 
 ### 🔍 `detectEmotionalEscalation.py`  
 **Purpose**: Flag sudden spikes in affective intensity  
@@ -31,6 +38,7 @@ Functions are designed to be modular, explainable, and compatible with safeguard
 **Methods**:  
 - External source comparison  
 - Confidence modeling  
+- (Planned) Trust score and domain tagging  
 **Output**: Verification status + confidence delta
 
 ### 🔁 `identifyRecursiveLoops.py`  
@@ -69,4 +77,5 @@ Functions are designed to be modular, explainable, and compatible with safeguard
 - Each function operates independently and can be toggled via config  
 - Outputs are designed to feed into safeguard protocols and mitigation logic  
 - Functions may optionally interface with memory managers or persona engines  
-- All modules are built for graceful failure and explainable behavior
+- All modules are built for graceful failure and explainable behavior  
+- Emotional tone and editorial modulation are now supported via `map_emotion_to_tone()` and `paraphrase()`
