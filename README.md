@@ -106,7 +106,7 @@ DLI is built with the following principles:
 - **Mental Health Respect** — collaborate with detection systems, never replace care  
 - **AI Autonomy** — preserve bot agency and expressive range  
 
-> DLI is not a substitute for therapy or crisis response. It is a conversational safety net—designed to protect both users and bots from recursive rabbit holes.
+> **DLI is not a substitute for therapy or crisis response. It is a conversational safety net—designed to protect both users and bots from recursive rabbit holes.**
 
 ---
 
