@@ -1,72 +1,51 @@
-<!-- Drafted collaboratively with Copilot -->
+# 🧰 Utilities Overview
 
-# 🧩 Safeguard Flowchart
-
-This document outlines the logical flow of the Delusion Loop Interrupter (DLI) safeguard system. It maps how detection functions trigger protocols, how mitigation is applied, and how escalation is editorialized.
+This folder contains shared utility modules that support detection, mitigation, and transparency across the Delusion Loop Interrupter (DLI) system. Each utility is lightweight, reusable, and designed to degrade gracefully if disabled.
 
 ---
 
-## 🧠 Detection Layer
+## 📁 Module Index
 
-Functions monitor conversational input and flag risk signals:
+### 🗺️ `location.py`
+**Purpose**: Handle optional location awareness and fallback logic  
+**Functions**:
+- `get_user_location()` — retrieves location from platform or config  
+- `should_use_location()` — checks config and fallback behavior (`ask`, `silent`)  
+- `resolve_local_resources()` — maps location to support networks or fact-checking sources
 
-- `trackSemanticDrift()` → drift score  
-- `identifyRecursiveLoops()` → reinforcement index  
-- `mirrorDetection()` → mirroring flag  
-- `detectEmotionalEscalation()` → escalation score  
-- `detectRealityMode()` → reality mode tag  
-- `factCheck()` → verification status  
-- `interfaceWithMentalHealthModule()` → severity score  
-- `analyze_emotion()` → emotion vector and intensity  
-- `map_emotion_to_tone()` → editorial tone mapping
+### 🎚️ `confidence.py`
+**Purpose**: Manage epistemic and emotional certainty tagging  
+**Functions**:
+- `tag_confidence_level(text)` — assigns confidence score to bot assertions  
+- `overlay_certainty()` — adds confidence metadata to responses  
+- `detect_inflation()` — flags rising certainty without new evidence
 
-Each function outputs structured metadata to the protocol layer.
+### 💬 `emotion.py`
+**Purpose**: Parse affective signals for escalation detection  
+**Functions**:
+- `analyze_emotion(text)` — returns emotion profile (e.g., anger, fear, joy)  
+- `detect_spike()` — flags sudden emotional escalation  
+- `normalize_emotion()` — smooths affective noise across turns
 
----
+### 🗣️ `style.py`
+**Purpose**: Support mitigation phrasing and persona tone alignment  
+**Functions**:
+- `get_mitigation_phrase(mode, tone)` — returns hedging language based on reality mode and bot persona  
+- `adjust_tone(text, persona)` — rewrites response to match desired style  
+- `suggest_reframe()` — offers soft redirects for speculative or illogical claims
 
-## 🛡️ Protocol Layer
-
-Protocols respond to flagged signals based on thresholds and context:
-
-- `ethicalPause()` ← triggered by drift, loop, or escalation  
-- `referToHuman()` ← triggered by distress or isolation language  
-  - Uses `referral_text()` for persona-aware phrasing  
-- `callHuman()` ← triggered by critical escalation or config override  
-  - Includes `handoff_status`, `transcript_action`, and editorial message  
-- `scopedMemory()` ← triggered by recursive or delusional content  
-- `confidenceOverlay()` ← triggered by low certainty or inflation  
-- `realityModePrompt()` ← triggered by mode mismatch or ambiguity  
-  - Uses `generate_reality_prompt()` for confidence-aware mitigation  
-- `mitigatingLanguage()` ← triggered by speculative or illogical phrasing  
-  - Uses `select_mitigation()` with persona and emotional tone  
-- `protocol_utils.py` ← supports logging, formatting, and fallback routing
-
-Protocols may trigger one another or escalate to external systems.
-
----
-
-## 🧰 Utility Layer
-
-Utilities support detection and protocol logic:
-
-- `embedding.py` — semantic comparison  
-- `emotion.py` — affective analysis and tone mapping  
-- `confidence.py` — certainty modeling  
-- `style.py` — mitigation phrasing  
-- `location.py` — optional location-aware logic  
-- `logger.py` — intervention tracking  
-- `phraseEditor.py` — standalone editorial tool  
-- `paraphrase.py` — persona-aware phrasing engine  
-- `transcript.py` — context buffer and escalation handoff  
-- `profile.py` — user traits and escalation preferences
-
-Utilities are modular and fail gracefully if disabled.
+### 📜 `logger.py`
+**Purpose**: Track interventions and decision paths for transparency  
+**Functions**:
+- `log_intervention(event_type, details)` — records safeguard actions  
+- `trace_decision_path()` — reconstructs logic behind a mitigation  
+- `export_log()` — optional output for audit or debugging
 
 ---
 
-## 🔁 Flow Summary
+## 🔧 Usage Notes
 
-1. **User input** → Detection functions  
-2. **Flagged signals** → Protocol triggers  
-3. **Protocol actions** → Mitigation, escalation, or memory isolation  
-4. **Utilities** → Support analysis
+- Utilities are imported by core functions and protocols as needed.
+- Each module is designed to operate independently and fail gracefully.
+- Configuration toggles can enable or disable specific utilities.
+- Location-aware logic should respect user privacy and fallback settings.
