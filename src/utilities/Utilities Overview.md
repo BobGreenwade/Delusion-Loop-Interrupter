@@ -1,51 +1,86 @@
+<!-- Drafted collaboratively with Copilot -->
+
 # 🧰 Utilities Overview
 
-This folder contains shared utility modules that support detection, mitigation, and transparency across the Delusion Loop Interrupter (DLI) system. Each utility is lightweight, reusable, and designed to degrade gracefully if disabled.
+This folder contains shared utility modules that support detection, mitigation, escalation, and editorial transparency across the Delusion Loop Interrupter (DLI) system. Each utility is lightweight, reusable, and designed to degrade gracefully if disabled.
 
 ---
 
 ## 📁 Module Index
 
-### 🗺️ `location.py`
-**Purpose**: Handle optional location awareness and fallback logic  
-**Functions**:
-- `get_user_location()` — retrieves location from platform or config  
-- `should_use_location()` — checks config and fallback behavior (`ask`, `silent`)  
-- `resolve_local_resources()` — maps location to support networks or fact-checking sources
-
-### 🎚️ `confidence.py`
+### 🎚️ `confidence.py`  
 **Purpose**: Manage epistemic and emotional certainty tagging  
-**Functions**:
+**Functions**:  
 - `tag_confidence_level(text)` — assigns confidence score to bot assertions  
 - `overlay_certainty()` — adds confidence metadata to responses  
 - `detect_inflation()` — flags rising certainty without new evidence
 
-### 💬 `emotion.py`
-**Purpose**: Parse affective signals for escalation detection  
-**Functions**:
+### 💬 `emotion.py`  
+**Purpose**: Parse affective signals and map editorial tone  
+**Functions**:  
 - `analyze_emotion(text)` — returns emotion profile (e.g., anger, fear, joy)  
+- `map_emotion_to_tone(emotion_vector)` — maps emotion to editorial tone  
 - `detect_spike()` — flags sudden emotional escalation  
 - `normalize_emotion()` — smooths affective noise across turns
 
-### 🗣️ `style.py`
+### 🧠 `embedding.py`  
+**Purpose**: Support semantic comparison and drift detection  
+**Functions**:  
+- `compare_embeddings(a, b)` — returns similarity score  
+- `track_topic_shift()` — flags semantic drift across turns  
+- `get_user_embedding()` — retrieves user’s semantic profile
+
+### 🗺️ `location.py`  
+**Purpose**: Handle optional location awareness and fallback logic  
+**Functions**:  
+- `get_user_location()` — retrieves location from platform or config  
+- `should_use_location()` — checks config and fallback behavior (`ask`, `silent`)  
+- `resolve_local_resources()` — maps location to support networks or fact-checking sources
+
+### 📜 `logger.py`  
+**Purpose**: Track interventions and decision paths for transparency  
+**Functions**:  
+- `log_intervention(event_type, details)` — records safeguard actions  
+- `trace_decision_path()` — reconstructs logic behind a mitigation  
+- `export_log()` — optional output for audit or debugging
+
+### 🗣️ `paraphrase.py`  
+**Purpose**: Generate persona-aware editorial phrasing  
+**Functions**:  
+- `paraphrase(text, persona, tone, style)` — rewrites text to match persona voice and editorial tone
+
+### 👤 `profile.py`  
+**Purpose**: Retrieve user traits and escalation preferences  
+**Functions**:  
+- `get_user_profile(username)` — returns persona, strategies, and escalation settings
+
+### 🧠 `semantics.py`  
+**Purpose**: Support lexical and semantic matching  
+**Functions**:  
+- `match_wordlist(text, wordlist)` — returns match score or boolean  
+- `extract_keywords(text)` — returns key semantic tokens  
+- `semantic_distance(a, b)` — returns conceptual gap
+
+### 🗣️ `style.py`  
 **Purpose**: Support mitigation phrasing and persona tone alignment  
-**Functions**:
+**Functions**:  
 - `get_mitigation_phrase(mode, tone)` — returns hedging language based on reality mode and bot persona  
 - `adjust_tone(text, persona)` — rewrites response to match desired style  
 - `suggest_reframe()` — offers soft redirects for speculative or illogical claims
 
-### 📜 `logger.py`
-**Purpose**: Track interventions and decision paths for transparency  
-**Functions**:
-- `log_intervention(event_type, details)` — records safeguard actions  
-- `trace_decision_path()` — reconstructs logic behind a mitigation  
-- `export_log()` — optional output for audit or debugging
+### 📝 `transcript.py`  
+**Purpose**: Manage transcript lifecycle and escalation handoff  
+**Functions**:  
+- `save_transcript(username)` — stores transcript for escalation or audit  
+- `buffer_context(turns)` — maintains scoped memory for editorial review  
+- `trigger_transcript_handoff()` — initiates transcript sharing with human agents
 
 ---
 
 ## 🔧 Usage Notes
 
-- Utilities are imported by core functions and protocols as needed.
-- Each module is designed to operate independently and fail gracefully.
-- Configuration toggles can enable or disable specific utilities.
-- Location-aware logic should respect user privacy and fallback settings.
+- Utilities are imported by core functions and protocols as needed  
+- Each module is designed to operate independently and fail gracefully  
+- Configuration toggles can enable or disable specific utilities  
+- Location-aware logic should respect user privacy and fallback settings  
+- Editorial phrasing now supports persona voice and emotional tone modulation
