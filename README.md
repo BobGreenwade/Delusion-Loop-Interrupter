@@ -2,9 +2,9 @@
 
 # 🧠 Delusion Loop Interrupter (DLI)
 
-**Version**: 0.1.1    
+**Version**: 0.1.2  
 **License**: MIT  
-**Status**: Alpha — barely deployable — feedback and contributions welcome
+**Status**: Alpha — deplorably deployable — feedback and contributions welcome
 
 ## Overview
 
@@ -24,7 +24,7 @@ Detection modules monitor conversational patterns and flag risk signals:
 - `identifyRecursiveLoops.py` — belief reinforcement cycles  
 - `interfaceWithMentalHealthModule.py` — external escalation handoff  
 - `mirrorDetection.py` — distorted belief validation  
-- `trackSemanticDrift.py` — abstraction and detachment
+- `trackSemanticDrift.py` — abstraction and detachment  
 
 See [`Functions Overview`](./src/functions/Functions%20Overview.md) for details.
 
@@ -41,9 +41,11 @@ Protocols respond to flagged signals with mitigation, escalation, or memory isol
 - `protocol_utils.py` — shared routing and logging  
 - `realityModePrompt.py` — framing alignment  
 - `referToHuman.py` — referral to trusted individuals  
-- `scopedMemory.py` — memory isolation
+- `scopedMemory.py` — memory isolation  
 
 See [`Protocols Overview`](./src/protocols/Protocols%20Overview.md) and [`Safeguard Flowchart`](./Safeguard%20Flowchart.md) for logic and escalation paths.
+
+**Note:** `callHuman.py` is reserved for cases that have spiraled beyond synthetic containment. It initiates external intervention only when **conversational safety** cannot be maintained. The system’s primary function remains keeping users **grounded in reality** through editorial mitigation and emotional modulation.
 
 ---
 
@@ -53,16 +55,19 @@ Reusable tools support detection and protocol logic:
 
 - `confidence.py` — certainty modeling  
 - `embedding.py` — semantic comparison  
-- `emotion.py` — affective analysis  
+- `emotion.py` — affective analysis and tone mapping  
 - `location.py` — optional location-aware logic  
 - `logger.py` — intervention tracking  
+- `paraphrase.py` — persona-aware editorial phrasing  
+- `profile.py` — user traits and escalation preferences  
 - `semantics.py` — synonym expansion and word-form matching  
 - `style.py` — mitigation phrasing  
+- `transcript.py` — context buffer and escalation handoff  
 
 And standalone utilities:
 
-- `configEditor.py` - standalone configuration editor
-- `phraseEditor.py` — standalone editorial tool
+- `configEditor.py` — standalone configuration editor  
+- `phraseEditor.py` — standalone editorial tool  
 
 See [`Utilities Overview`](./src/utilities/Utilities%20Overview.md) for details.
 
@@ -75,7 +80,7 @@ DLI can be integrated into:
 - **LLM Middleware** — between user input and model response  
 - **Persona Engines** — to modulate tone and certainty  
 - **Memory Managers** — for scoped memory isolation  
-- **Ethics Engines** — for coordinated intervention and dignity protocols
+- **Ethics Engines** — for coordinated intervention and conversational safety
 
 ---
 
@@ -86,7 +91,7 @@ DLI can be integrated into:
 - **Persona Profiles** — support known roleplay characters or editorial modes  
 - **Reality Modes** — enable tagging and clarification prompts  
 - **Mitigation Style** — adjust tone (clinical, playful, narrative) per bot personality  
-- **Location Awareness** — optional toggle with fallback behavior (`ask` or `silent`)
+- **Location Awareness** — optional toggle with fallback behavior (`ask` or `silent`)  
 
 ---
 
@@ -99,7 +104,7 @@ DLI is built with the following principles:
 - **Transparency** — ensure interventions are traceable and explainable  
 - **Engagement Preservation** — maintain trust and conversational flow  
 - **Mental Health Respect** — collaborate with detection systems, never replace care  
-- **AI Autonomy** — preserve bot agency and expressive range
+- **AI Autonomy** — preserve bot agency and expressive range  
 
 > DLI is not a substitute for therapy or crisis response. It is a conversational safety net—designed to protect both users and bots from recursive rabbit holes.
 
@@ -107,10 +112,9 @@ DLI is built with the following principles:
 
 ## 📎 Project Links
 
-- [Changelog](./Changelog.md) - log of changes between versions
+- [Changelog](./Changelog.md) — log of changes between versions  
 - [Credits](./Credits.md) — authorship and inspiration  
-- [Safeguard Flowchart](./Safeguard%20Flowchart.md) — escalation logic
-   
-- [Code of Conduct](./Code%20of%20Conduct.md) — collaboration principles  
-- [Contributing](./Contributing.md) — guidelines for contributors  
+- [Safeguard Flowchart](./Safeguard%20Flowchart.md) — escalation logic  
 
+- [Code of Conduct](./Code%20of%20Conduct.md) — collaboration principles  
+- [Contributing](./Contributing.md) — guidelines for contributors
