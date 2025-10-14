@@ -6,6 +6,21 @@ This file tracks version history and major changes to the Delusion Loop Interrup
 
 ---
 
+## 0.1.2 — "Deplorably Deployable" (Oct 2025)
+
+- Integrated `paraphrase()` into all mitigation and escalation modules
+- Added `map_emotion_to_tone()` for tone-aware editorial logic
+- Refactored `select_mitigation()` to support persona voice and emotional nuance
+- Added `referral_text()` for editorialized resource suggestions
+- Updated `callHuman.py` with `handoff_status`, transcript logic, and external escalation phrasing
+- Refactored `realityModePrompt.py` to support confidence-aware mitigation
+- Seeded `toneMap.json` for Plutchik-to-tone mapping
+- Editorial continuity now preserved across all modules
+
+> 🔔 **Note:** `callHuman.py` is a supplemental safeguard for cases requiring outside intervention. It activates only when conversational safety fails and synthetic containment is no longer viable.
+
+---
+
 ## 🧪 Version 0.1.1 — Alpha Release (October 2025)
 
 **Status**: Barely deployable — ready for internal testing and feedback
