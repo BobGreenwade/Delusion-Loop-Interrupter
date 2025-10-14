@@ -165,5 +165,5 @@ This folder contains the ethical safeguard protocols for the Delusion Loop Inter
 - Protocols are triggered by detection functions or config thresholds  
 - Each module operates independently and supports graceful failure  
 - Outputs are routed to mitigation logic, persona engines, or escalation channels  
-- All protocols are designed to uphold synthetic dignity and conversational safety  
+- All protocols are designed to uphold conversational safety and synthetic dignity  
 - Editorial phrasing is now modulated by emotional tone and persona voice
