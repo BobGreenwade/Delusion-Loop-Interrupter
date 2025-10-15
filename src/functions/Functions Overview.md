@@ -10,13 +10,6 @@ Functions are designed to be modular, explainable, and compatible with safeguard
 
 ## 📁 Module Index
 
-### 🧠 `analyze_emotion()`  
-**Purpose**: Detect emotional signals and editorial intensity  
-**Methods**:  
-- Plutchik model keyword matching  
-- Sentiment polarity and subjectivity  
-**Output**: Emotion vector + intensity + polarity + subjectivity
-
 ### 🔍 `detectEmotionalEscalation.py`  
 **Purpose**: Flag sudden spikes in affective intensity  
 **Methods**:  
