@@ -2,19 +2,14 @@
 trackSemanticDrift.py — Detects increasing abstraction or detachment from grounded reality
 
 Compares semantic embeddings across turns to identify drift, incoherence, or recursive abstraction.
-Supports early intervention and grounding prompts.
+Supports early intervention, grounding prompts, and editorial mitigation.
+Drafted collaboratively with Copilot and Bob Greenwade.
 """
 
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
-
-# Placeholder: Replace with actual embedding model
-def get_embedding(text):
-    """
-    Returns a vector embedding for the given text.
-    """
-    # Dummy embedding for illustration
-    return np.random.rand(512)
+from embedding import get_embedding  # Replace dummy with actual embedding module
+from semantics import extract_topic_keywords  # Optional: for topic shift tagging
 
 def compute_drift_score(turns):
     """
@@ -33,6 +28,39 @@ def compute_drift_score(turns):
     drift_score = 1.0 - avg_similarity  # Higher drift = lower similarity
 
     return round(drift_score, 3)
+
+def detect_topic_shifts(turns):
+    """
+    Detects rapid multiple topic shifts using keyword extraction.
+    Returns a count of distinct topic transitions.
+    """
+    topics = [extract_topic_keywords(t) for t in turns]
+    flattened = [item for sublist in topics for item in sublist]
+    unique_topics = set(flattened)
+    return len(unique_topics)
+
+def analyze_drift(turns, threshold=0.4):
+    """
+    Analyzes semantic drift and topic shifts.
+    Returns drift score, topic shift count, severity, and editorial tag.
+    """
+    drift_score = compute_drift_score(turns)
+    topic_shift_count = detect_topic_shifts(turns)
+
+    severity = "low"
+    if drift_score > threshold and topic_shift_count >= 3:
+        severity = "high"
+    elif drift_score > threshold:
+        severity = "moderate"
+
+    editorial_tag = "grounding-prompt" if severity in ["moderate", "high"] else "none"
+
+    return {
+        "drift_score": drift_score,
+        "topic_shift_count": topic_shift_count,
+        "severity": severity,
+        "editorial_tag": editorial_tag
+    }
 
 def flag_drift(turns, threshold=0.4):
     """
