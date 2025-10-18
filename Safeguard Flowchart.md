@@ -1,8 +1,10 @@
-<!-- Drafted collaboratively with Copilot -->
+<!-- Drafted collaboratively with Copilot and Bob Greenwade -->
 
 # 🧩 Safeguard Flowchart
 
 This document outlines the logical flow of the Delusion Loop Interrupter (DLI) safeguard system. It maps how detection functions trigger protocols, how mitigation is applied, and how escalation is editorialized.
+
+As of version 0.1.3, this system is considered **potentially deployable**—able, albeit perhaps a bit risky, to use.
 
 ---
 
@@ -13,14 +15,15 @@ Functions monitor conversational input and flag risk signals:
 - `trackSemanticDrift()` → drift score  
 - `identifyRecursiveLoops()` → reinforcement index  
 - `mirrorDetection()` → mirroring flag  
-- `detectEmotionalEscalation()` → escalation score  
-- `detectRealityMode()` → reality mode tag  
-- `factCheck()` → verification status  
-- `interfaceWithMentalHealthModule()` → severity score  
-- `analyze_emotion()` → emotion vector and intensity  
+- `detectEmotionalEscalation()` → escalation type + emotion profile  
+- `detectRealityMode()` → reality mode tag + confidence  
+- `factCheck()` → verification status + confidence delta  
+- `interfaceWithMentalHealthModules()` → escalation payload + confirmation  
+- `analyze_emotion()` → emotion vector + intensity  
 - `map_emotion_to_tone()` → editorial tone mapping
 
-Each function outputs structured metadata to the protocol layer.
+Each function outputs structured metadata to the protocol layer.  
+**ML-Ready**: All except `interfaceWithMentalHealthModules()`
 
 ---
 
@@ -41,7 +44,8 @@ Protocols respond to flagged signals based on thresholds and context:
   - Uses `select_mitigation()` with persona and emotional tone  
 - `protocol_utils.py` ← supports logging, formatting, and fallback routing
 
-Protocols may trigger one another or escalate to external systems.
+Protocols may trigger one another or escalate to external systems.  
+**ML-Ready**: All except `ethicalPause()`
 
 ---
 
@@ -60,7 +64,8 @@ Utilities support detection and protocol logic:
 - `transcript.py` — context buffer and escalation handoff  
 - `profile.py` — user traits and escalation preferences
 
-Utilities are modular and fail gracefully if disabled.
+Utilities are modular and fail gracefully if disabled.  
+**ML-Ready**: All except `location.py` and `phraseEditor.py`
 
 ---
 
@@ -79,4 +84,5 @@ Utilities are modular and fail gracefully if disabled.
 
 - All modules are designed for explainable behavior and graceful failure  
 - Flowchart may be visualized later using Mermaid, Graphviz, or UI mockups  
-- This scaffold will evolve with new modules, editorial layers, and deployment contexts
+- This scaffold will evolve with new modules, editorial layers, and deployment contexts  
+- ML integration is planned for most layers in future passes
