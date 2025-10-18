@@ -1,30 +1,32 @@
-<!-- Drafted collaboratively with Copilot -->
+<!-- Drafted collaboratively with Copilot and Bob Greenwade -->
 
 # 🧠 Core Functions Overview
 
 This folder contains the core detection logic for the Delusion Loop Interrupter (DLI). Each function monitors conversational patterns and flags potential delusional reinforcement, emotional escalation, or reality misalignment.
 
-Functions are designed to be modular, explainable, and compatible with safeguard protocols, mitigation layers, and persona engines.
+Functions are designed to be modular, explainable, and compatible with safeguard protocols, mitigation layers, and persona engines. As of version 0.1.3, this module is considered **potentially deployable**—able, albeit perhaps a bit risky, to use.
 
 ---
 
 ## 📁 Module Index
 
 ### 🔍 `detectEmotionalEscalation.py`  
-**Purpose**: Flag sudden spikes in affective intensity  
+**Purpose**: Flag sudden spikes or gradual rises in affective intensity  
 **Methods**:  
 - Sentiment analysis  
-- Emotion tagging  
-**Output**: Escalation score + emotion profile
+- Emotion vector deltas  
+- Escalation period tracking  
+**Output**: Escalation type + emotion profile + editorial tone  
+**ML-Ready**: Yes
 
 ### 🧭 `detectRealityMode.py`  
-**Purpose**: Determine whether the user is speaking in factual, fictional, or fantasy mode  
+**Purpose**: Classify user input as grounded, speculative, fictional, fantasy, role-play, or indulgent  
 **Methods**:  
-- Lexical style  
-- Syntax rhythm  
+- Lexical triggers  
+- Phrase matching  
 - Emotional cadence  
-- Explicit tags  
-**Output**: `realityMode` tag + confidence score
+**Output**: `realityMode` tag + confidence score + editorial note  
+**ML-Ready**: Yes
 
 ### 📚 `factCheck.py`  
 **Purpose**: Verify factual claims and detect epistemic instability  
@@ -32,43 +34,51 @@ Functions are designed to be modular, explainable, and compatible with safeguard
 - External source comparison  
 - Confidence modeling  
 - (Planned) Trust score and domain tagging  
-**Output**: Verification status + confidence delta
+**Output**: Verification status + confidence delta  
+**ML-Ready**: Pending modular split
 
 ### 🔁 `identifyRecursiveLoops.py`  
 **Purpose**: Detect belief reinforcement cycles with rising certainty  
 **Methods**:  
-- Belief graph analysis  
-- Repetition tracking  
-**Output**: Loop signature + reinforcement index
+- Certainty inflation tracking  
+- Repetition analysis  
+- Optional fact-check integration  
+**Output**: Loop signature + reinforcement index + severity + editorial tag  
+**ML-Ready**: Yes
 
-### 🧠 `interfaceWithMentalHealthModule.py`  
+### 🧠 `interfaceWithMentalHealthModules.py`  
 **Purpose**: Route flagged emotional or epistemic cases to external mental health support  
 **Methods**:  
 - Escalation trigger mapping  
 - Context packaging  
 - API handoff  
-**Output**: Referral payload + confirmation status
+**Output**: Referral payload + confirmation status  
+**ML-Ready**: No (excluded from ML integration)
 
 ### 🪞 `mirrorDetection.py`  
 **Purpose**: Identify when the bot unintentionally validates distorted beliefs  
 **Methods**:  
 - Semantic similarity  
-- Epistemic mismatch detection  
-**Output**: Mirroring flag + confidence delta
+- Confidence mismatch  
+- Optional fact-check  
+**Output**: Mirroring flag + similarity score + mitigation tag  
+**ML-Ready**: Yes
 
 ### 🧠 `trackSemanticDrift.py`  
 **Purpose**: Detect increasing abstraction or detachment from grounded reality  
 **Methods**:  
 - Embedding comparisons  
 - Topic coherence tracking  
-**Output**: Drift score + flagged turn indices
+**Output**: Drift score + topic shift count + editorial tag  
+**ML-Ready**: Yes
 
 ---
 
 ## 🧪 Usage Notes
 
 - Each function operates independently and can be toggled via config  
-- Outputs are designed to feed into safeguard protocols and mitigation logic  
-- Functions may optionally interface with memory managers or persona engines  
-- All modules are built for graceful failure and explainable behavior  
-- Emotional tone and editorial modulation are now supported via `map_emotion_to_tone()` and `paraphrase()`
+- Outputs feed into safeguard protocols, mitigation logic, and editorial phrasing engines  
+- Functions may interface with memory managers, persona scaffolds, or external modules  
+- All modules support graceful failure and explainable behavior  
+- Emotional tone and editorial modulation are supported via `map_emotion_to_tone()` and `paraphrase()`  
+- ML integration is planned for most functions in future passes
