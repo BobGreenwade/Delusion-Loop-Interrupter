@@ -1,10 +1,10 @@
-<!-- Drafted collaboratively with Copilot -->
+<!-- Drafted collaboratively with Copilot and Bob Greenwade -->
 
 # 🧠 Delusion Loop Interrupter (DLI)
 
-**Version**: 0.1.2  
+**Version**: 0.1.3  
 **License**: MIT  
-**Status**: Alpha — deplorably deployable — feedback and contributions welcome
+**Status**: Potentially Deployable — structurally sound, editorially aware, and ready for cautious use
 
 ## Overview
 
@@ -19,10 +19,10 @@ DLI is platform-agnostic and can be integrated into general-purpose, companion, 
 Detection modules monitor conversational patterns and flag risk signals:
 
 - `detectEmotionalEscalation.py` — affective intensity spikes  
-- `detectRealityMode.py` — factual vs fictional framing  
+- `detectRealityMode.py` — reality mode classification  
 - `factCheck.py` — epistemic verification  
 - `identifyRecursiveLoops.py` — belief reinforcement cycles  
-- `interfaceWithMentalHealthModule.py` — external escalation handoff  
+- `interfaceWithMentalHealthModules.py` — external escalation handoff  
 - `mirrorDetection.py` — distorted belief validation  
 - `trackSemanticDrift.py` — abstraction and detachment  
 
@@ -45,7 +45,7 @@ Protocols respond to flagged signals with mitigation, escalation, or memory isol
 
 See [`Protocols Overview`](./src/protocols/Protocols%20Overview.md) and [`Safeguard Flowchart`](./Safeguard%20Flowchart.md) for logic and escalation paths.
 
-**Note:** `callHuman.py` is reserved for cases that have spiraled beyond synthetic containment. It initiates external intervention only when **conversational safety** cannot be maintained. The system’s primary function remains keeping users **grounded in reality** through editorial mitigation and emotional modulation.
+> 🔔 `callHuman.py` is reserved for cases that have spiraled beyond synthetic containment. It initiates external intervention only when **conversational safety** cannot be maintained. The system’s primary function remains keeping users **grounded in reality** through editorial mitigation and emotional modulation.
 
 ---
 
@@ -54,20 +54,20 @@ See [`Protocols Overview`](./src/protocols/Protocols%20Overview.md) and [`Safegu
 Reusable tools support detection and protocol logic:
 
 - `confidence.py` — certainty modeling  
-- `embedding.py` — semantic comparison  
-- `emotion.py` — affective analysis and tone mapping  
+- `embedding.py` — semantic comparison and tone scaffolding  
+- `emotion.py` — affective analysis and editorial tone mapping  
 - `location.py` — optional location-aware logic  
-- `logger.py` — intervention tracking  
+- `logger.py` — intervention tracking and editorial tagging  
 - `paraphrase.py` — persona-aware editorial phrasing  
 - `profile.py` — user traits and escalation preferences  
 - `semantics.py` — synonym expansion and word-form matching  
-- `style.py` — mitigation phrasing  
+- `style.py` — mitigation phrasing and tone alignment  
 - `transcript.py` — context buffer and escalation handoff  
 
-And standalone utilities:
+Standalone utilities:
 
-- `configEditor.py` — standalone configuration editor  
-- `phraseEditor.py` — standalone editorial tool  
+- `configEditor.py` — configuration editor  
+- `phraseEditor.py` — editorial tool  
 
 See [`Utilities Overview`](./src/utilities/Utilities%20Overview.md) for details.
 
@@ -114,7 +114,8 @@ DLI is built with the following principles:
 
 - [Changelog](./Changelog.md) — log of changes between versions  
 - [Credits](./Credits.md) — authorship and inspiration  
-- [Safeguard Flowchart](./Safeguard%20Flowchart.md) — escalation logic  
+- [Safeguard Flowchart](./Safeguard%20Flowchart.md) — escalation logic
 
+  (Already in the menu:)
 - [Code of Conduct](./Code%20of%20Conduct.md) — collaboration principles  
 - [Contributing](./Contributing.md) — guidelines for contributors
