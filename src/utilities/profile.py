@@ -1,15 +1,26 @@
 """
 profile.py — Modular user profile management for DLI
 
-Supports creation, updates, and editorial assertions.
-Drafted collaboratively with Copilot.
+Supports creation, updates, editorial assertions, and ML-based trait refinement.
+Drafted collaboratively with Bob Greenwade and Copilot.
 """
 
 import os
 import json
 from embedding import fetch_external_profile
+from learning import run_learning
 
+CONFIG_PATH = "config.json"
 PROFILE_DIR = "profiles"
+
+def load_config():
+    try:
+        with open(CONFIG_PATH, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+CONFIG = load_config()
 
 def get_profile_path(username):
     return os.path.join(PROFILE_DIR, f"{username}_profile.json")
@@ -22,7 +33,7 @@ def get_user_profile(username="User"):
 
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
-      
+
 def create_user_profile(username, seed_text="Hello, I’m new here."):
     os.makedirs(PROFILE_DIR, exist_ok=True)
     path = get_profile_path(username)
@@ -33,25 +44,25 @@ def create_user_profile(username, seed_text="Hello, I’m new here."):
 
     external = fetch_external_profile(CONFIG.get("EXTERNAL_PROFILE_API", ""), seed_text)
     profile = {
-    "name": username,
-    "preferred_language": "en-US",
-    "escalation_opt_in": False,
-    "emergency_contacts": [],
-    "persona": {
-        "tone": "empathetic",
-        "style": "clarifying",
-        "allow_speculation": False
-    },
-    "profile_characteristics": {
-        "concern_level": 0,
-        "emotionality": 50,
-        "responsiveness": 75
-    },
-    "external_profile": external,
-    "strategies": ["default"]
-    "assertions": [],
-    "facts": {}
-}
+        "name": username,
+        "preferred_language": "en-US",
+        "escalation_opt_in": False,
+        "emergency_contacts": [],
+        "persona": {
+            "tone": "empathetic",
+            "style": "clarifying",
+            "allow_speculation": False
+        },
+        "profile_characteristics": {
+            "concern_level": 0,
+            "emotionality": 50,
+            "responsiveness": 75
+        },
+        "external_profile": external,
+        "strategies": ["default"],
+        "assertions": [],
+        "facts": {}
+    }
 
     with open(path, "w", encoding="utf-8") as f:
         json.dump(profile, f, indent=2)
@@ -134,4 +145,17 @@ def get_characteristic(username, key):
 
     with open(path, "r", encoding="utf-8") as f:
         profile = json.load(f)
-        return profile.get("profile_characteristics", {}).get(key, None)
+        value = profile.get("profile_characteristics", {}).get(key, None)
+
+    # Optional ML override
+    try:
+        ml_result = run_learning("trait_inference", {
+            "username": username,
+            "trait": key,
+            "current_value": value
+        })
+        value = ml_result.get("output", {}).get("value", value)
+    except Exception:
+        pass
+
+    return value
