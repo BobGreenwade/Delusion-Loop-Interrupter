@@ -4,13 +4,14 @@ confidence.py — Utility module for epistemic and emotional certainty tagging i
 Provides functions to assess, tag, and overlay confidence levels in bot responses.
 Helps distinguish speculation from grounded facts and detect rising certainty without new evidence.
 Now includes source verification from factCheck.py and semantic matching via semantics.py.
-Drafted collaboratively with Copilot.
+Drafted collaboratively with Copilot and Bob Greenwade.
 """
 
 import re
 import math
 from factCheck import validate_claim, TRUSTED_SOURCES
 from semantics import match_wordlist
+from learning import run_learning
 
 LOW_CONFIDENCE_MARKERS = [
     "maybe", "possibly", "some say", "unclear", "allegedly", "unverified", "theoretically", "hypothetically"
@@ -35,6 +36,13 @@ def tag_confidence_level(text):
         score += 0.1
     if match_wordlist(text, NEGATIVE_CONFIDENCE_MARKERS):
         score -= 0.2  # Stronger penalty for epistemic rejection
+
+    # Optional ML override
+    try:
+        ml_result = run_learning("confidence_score", {"text": text})
+        score = ml_result.get("output", {}).get("confidence", score)
+    except Exception:
+        pass
 
     return max(0.0, min(1.0, score))
 
