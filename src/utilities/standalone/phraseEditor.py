@@ -2,12 +2,13 @@
 phraseEditor.py — Utility for managing mitigation phrase library and editorial tone
 
 Allows staff to add, remove, retag, preview, and rewrite phrases in phrases.json.
-Supports tone adjustment, mirroring, escalation phrasing, and editorial rewrites.
-Drafted collaboratively with Copilot.
+Supports tone adjustment, mirroring, escalation phrasing, editorial rewrites, and ML-based tagging.
+Drafted collaboratively with Bob Greenwade and Copilot.
 """
 
 import json
 from pathlib import Path
+from learning import run_learning
 
 PHRASE_FILE = Path(__file__).parent / "data" / "phrases.json"
 
@@ -36,6 +37,27 @@ def remove_phrase(text):
 def list_phrases():
     for p in load_phrases():
         print(f"{p['text']} → modes: {p['modes']}, tones: {p['tones']}")
+
+def retag_phrase(text, new_modes=None, new_tones=None):
+    phrases = load_phrases()
+    for p in phrases:
+        if p["text"] == text:
+            if new_modes:
+                p["modes"] = new_modes
+            if new_tones:
+                p["tones"] = new_tones
+            print(f"[RETAGGED] {text}")
+            break
+    save_phrases(phrases)
+
+def auto_tag_phrase(text):
+    try:
+        ml_result = run_learning("phrase_tagging", {"text": text})
+        modes = ml_result.get("output", {}).get("modes", ["default"])
+        tones = ml_result.get("output", {}).get("tones", ["neutral"])
+        return {"text": text, "modes": modes, "tones": tones}
+    except Exception:
+        return {"text": text, "modes": ["default"], "tones": ["neutral"]}
 
 # 🎭 Editorial Utilities
 
@@ -74,3 +96,14 @@ def editorial_rewrite(text, style="lyric"):
         return f"Here’s the deal: {text}"
     else:
         return text
+
+def suggest_variants(text, tone="neutral", style="default"):
+    try:
+        ml_result = run_learning("phrase_variants", {
+            "text": text,
+            "tone": tone,
+            "style": style
+        })
+        return ml_result.get("output", {}).get("variants", [])
+    except Exception:
+        return []
