@@ -117,7 +117,39 @@ def paraphrase(text, persona="default", tone=None, style=None):
     result = call_llm(prompt)
     return result or text  # fallback to original if LLM fails
 
-# 🧠 Future placeholder: reparaphrase()
-# def reparaphrase(text, persona="default", tone=None, style=None, previous_attempt=None):
-#     """Refines or rephrases a prior paraphrase attempt based on editorial feedback."""
-#     ...
+def reparaphrase(text, persona="default", tone=None, style=None, previous_attempt=None, variation_tag="semantic_shift"):
+    """
+    Refines or rephrases a prior paraphrase attempt based on editorial feedback.
+    Uses variation_tag to signal desired change (e.g., 'semantic_shift', 'tone_flip', 'clarity_boost').
+    """
+    persona_data = load_persona_data(persona)
+    history_lines = scan_chat_history(persona)
+
+    # Optional ML variation injection
+    try:
+        ml_result = run_learning("reparaphrase_variation", {
+            "text": text,
+            "previous": previous_attempt,
+            "variation": variation_tag,
+            "persona": persona,
+            "tone": tone,
+            "style": style
+        })
+        tone = ml_result.get("output", {}).get("tone", tone)
+        style = ml_result.get("output", {}).get("style", style)
+    except Exception:
+        pass
+
+    prompt = f"""
+Rephrase the following in a different way than before.
+Persona: {persona_data.get('name')}
+Variation requested: {variation_tag}
+Tone: {tone or "neutral"}, Style: {style or "default"}
+
+Original: "{text}"
+Previous attempt: "{previous_attempt}"
+New version:
+""".strip()
+
+    result = call_llm(prompt)
+    return result or text
