@@ -2,14 +2,16 @@
 embedding.py
 
 Provides access to emotional context and editorial metadata for tone-aware modules.
-Supports config-driven persona logic, override scaffolding, and optional external profile enrichment.
-Drafted collaboratively with Copilot and Bob Greenwade.
+Supports config-driven persona logic, override scaffolding, optional external profile enrichment,
+and LLM-friendly invocation.
+Drafted collaboratively with Bob Greenwade and Copilot.
 """
 
 import json
 import requests
 from emotion import analyze_emotion
 from confidence import tag_confidence_level
+from learning import run_learning
 
 def load_config(path="config.json"):
     try:
@@ -27,9 +29,7 @@ def load_config(path="config.json"):
 CONFIG = load_config()
 
 def fetch_external_profile(api_url, user_text):
-    """
-    Optional enrichment from external persona or tone API.
-    """
+    """Optional enrichment from external persona or tone API."""
     try:
         response = requests.post(api_url, json={"text": user_text})
         return response.json() if response.status_code == 200 else {}
@@ -44,9 +44,7 @@ def get_emotional_context(text):
     }
 
 def persona_tone_override(context, override_type="satire"):
-    """
-    Overrides persona tone/style based on editorial context.
-    """
+    """Overrides persona tone/style based on editorial context."""
     override_map = {
         "satire": {"tone": "ironic", "style": "parodic"},
         "escalation": {"tone": "urgent", "style": "direct"},
@@ -55,9 +53,7 @@ def persona_tone_override(context, override_type="satire"):
     return override_map.get(override_type, context)
 
 def enrich_embedding_context(base_context, external_profile):
-    """
-    Merges external profile data into base embedding context.
-    """
+    """Merges external profile data into base embedding context."""
     enriched = base_context.copy()
     enriched.update({
         "external_tone": external_profile.get("tone"),
@@ -92,3 +88,22 @@ def get_embedding_context(user_text, bot_text, override_type=None, external_api=
         base_context = enrich_embedding_context(base_context, external_profile)
 
     return base_context
+
+def generate_embedding_context(user_text, bot_text, override_type=None, external_api=None):
+    """
+    LLM-friendly wrapper for embedding context generation.
+    Includes optional ML tone refinement.
+    """
+    context = get_embedding_context(user_text, bot_text, override_type, external_api)
+
+    try:
+        ml_result = run_learning("embedding_refinement", {
+            "user_text": user_text,
+            "bot_text": bot_text,
+            "context": context
+        })
+        context.update(ml_result.get("output", {}))
+    except Exception:
+        pass
+
+    return context
