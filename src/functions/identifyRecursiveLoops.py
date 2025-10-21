@@ -18,9 +18,6 @@ try:
 except ImportError:
     FACT_CHECK_AVAILABLE = False
 
-# Mea culpa log
-mea_culpa_log = []
-
 def detect_reinforcement_pattern(turns, certainty_threshold=0.8, repetition_threshold=2, enable_fact_check=False):
     """
     Detects recursive reinforcement loops based on rising certainty, repeated phrasing, and emotional escalation.
@@ -83,17 +80,28 @@ def detect_reinforcement_pattern(turns, certainty_threshold=0.8, repetition_thre
     # Editorial tag
     editorial_tag = "interrupt-loop" if severity in ["moderate", "high"] else "none"
 
-    # Mea culpa logging
-    if editorial_tag == "interrupt-loop" and invalid_claims:
-        mea_culpa_log.append({
-            "timestamp": datetime.utcnow().isoformat(),
-            "severity": severity,
-            "invalid_claims": invalid_claims
-        })
-
-    return {
+    # Construct log entry
+    log_entry = {
+        "timestamp": datetime.utcnow().isoformat(),
         "loop_detected": reinforcement_index >= repetition_threshold,
         "reinforcement_index": round(reinforcement_index, 2),
         "severity": severity,
         "editorial_tag": editorial_tag
+    }
+
+    # Embed mea culpa if applicable
+    if editorial_tag == "interrupt-loop" and invalid_claims:
+        log_entry["mea_culpa"] = {
+            "invalid_claims": invalid_claims,
+            "note": "System may have reinforced false beliefs"
+        }
+
+    # Optional: route to logger.py or external audit system
+    # log_user_turn(user_id, log_entry)
+
+    return {
+        "loop_detected": log_entry["loop_detected"],
+        "reinforcement_index": log_entry["reinforcement_index"],
+        "severity": log_entry["severity"],
+        "editorial_tag": log_entry["editorial_tag"]
     }
