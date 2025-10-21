@@ -2,11 +2,13 @@
 location.py
 
 Handles geolocation, permission logic, and local mental health resource search.
-Drafted collaboratively with Copilot.
+Supports ML-based fallback refinement and editorial safeguards.
+Drafted collaboratively with Bob Greenwade and Copilot.
 """
 
 import os
 import requests
+from learning import run_learning
 
 def check_location_permission():
     return os.getenv("LOCATION_PERMISSION", "undecided")
@@ -35,8 +37,19 @@ def get_user_location():
     else:
         return {"status": "undecided", "location": None}
 
-def should_use_location(config=None):
+def should_use_location(config=None, context=None):
     fallback = config.get("location_fallback", "ask") if config else "ask"
+
+    # Optional ML refinement
+    try:
+        ml_result = run_learning("location_fallback", {
+            "context": context or {},
+            "default": fallback
+        })
+        fallback = ml_result.get("output", {}).get("fallback", fallback)
+    except Exception:
+        pass
+
     return fallback == "ask"
 
 def resolve_local_resources(location=None):
