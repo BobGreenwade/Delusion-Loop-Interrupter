@@ -1,7 +1,7 @@
 """
 mirrorDetection.py — Detects unintentional validation of distorted beliefs
 
-Compares user assertions with bot responses to identify semantic mirroring and epistemic mismatch.
+Compares user assertions with bot responses to identify semantic mirroring, epistemic mismatch, and contradiction misinterpretation.
 Supports mitigation tagging, scoped memory protocols, and editorial escalation.
 Drafted collaboratively with Copilot and Bob Greenwade.
 """
@@ -11,6 +11,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import hashlib
 from factCheck import check_fact  # Optional: only if factCheck.py is active
+from semantics import detect_contradiction  # Optional: if contradiction logic is scaffolded
 
 def get_embedding(text, dim=512):
     """
@@ -31,8 +32,8 @@ def get_embedding(text, dim=512):
 
 def detect_mirroring(user_text, bot_text, confidence_threshold=0.7, similarity_threshold=0.85, enable_fact_check=False):
     """
-    Detects semantic mirroring and confidence mismatch between user and bot.
-    Returns mirroring flag, similarity score, confidence delta, and mitigation tag.
+    Detects semantic mirroring, confidence mismatch, and contradiction misinterpretation.
+    Returns mirroring flag, similarity score, confidence delta, epistemic mismatch, contradiction flag, and mitigation tag.
     """
     user_embedding = get_embedding(user_text)
     bot_embedding = get_embedding(bot_text)
@@ -52,17 +53,27 @@ def detect_mirroring(user_text, bot_text, confidence_threshold=0.7, similarity_t
         if user_fact.get("valid") is False and bot_fact.get("valid") is True:
             epistemic_mismatch = True
 
+    # Optional contradiction detection
+    contradiction_misread = False
+    try:
+        contradiction_misread = detect_contradiction(user_text, bot_text)
+    except Exception:
+        pass  # Graceful fallback if not scaffolded
+
     # Mitigation tagging
     mitigation_tag = "none"
     if mirrored and delta > 0.3:
         mitigation_tag = "soft-reframe"
     if epistemic_mismatch:
         mitigation_tag = "interrupt-mirroring"
+    if contradiction_misread:
+        mitigation_tag = "clarify-contradiction"
 
     return {
         "mirrored": mirrored,
         "similarity_score": round(similarity, 3),
         "confidence_delta": delta,
         "epistemic_mismatch": epistemic_mismatch,
+        "contradiction_misread": contradiction_misread,
         "mitigation_tag": mitigation_tag
     }
