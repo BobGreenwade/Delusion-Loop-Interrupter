@@ -2,14 +2,15 @@
 trackSemanticDrift.py — Detects increasing abstraction or detachment from grounded reality
 
 Compares semantic embeddings across turns to identify drift, incoherence, or recursive abstraction.
-Supports early intervention, grounding prompts, and editorial mitigation.
+Supports early intervention, grounding prompts, editorial mitigation, and external escalation.
 Drafted collaboratively with Copilot and Bob Greenwade.
 """
 
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
-from embedding import get_embedding  # Replace dummy with actual embedding module
-from semantics import extract_topic_keywords  # Optional: for topic shift tagging
+from embedding import get_embedding
+from semantics import extract_topic_keywords
+from interfaceWithMentalHealthModules import trigger_external_module, format_handoff_metadata
 
 def compute_drift_score(turns):
     """
@@ -39,10 +40,11 @@ def detect_topic_shifts(turns):
     unique_topics = set(flattened)
     return len(unique_topics)
 
-def analyze_drift(turns, threshold=0.4):
+def analyze_drift(turns, threshold=0.4, enable_external_check=False):
     """
     Analyzes semantic drift and topic shifts.
-    Returns drift score, topic shift count, severity, and editorial tag.
+    Optionally triggers external module if drift suggests cognitive risk.
+    Returns drift score, topic shift count, severity, editorial tag.
     """
     drift_score = compute_drift_score(turns)
     topic_shift_count = detect_topic_shifts(turns)
@@ -54,6 +56,21 @@ def analyze_drift(turns, threshold=0.4):
         severity = "moderate"
 
     editorial_tag = "grounding-prompt" if severity in ["moderate", "high"] else "none"
+
+    # Optional external escalation
+    if enable_external_check and severity in ["moderate", "high"]:
+        metadata = format_handoff_metadata(
+            transcript=turns,
+            severity=severity,
+            editorial_tag=editorial_tag,
+            loop_detected=False
+        )
+        trigger_external_module(
+            module_name="MindBridge Escalation API",
+            signal_type="monitor",
+            payload=metadata,
+            persona_context={"editorial_tag": editorial_tag}
+        )
 
     return {
         "drift_score": drift_score,
