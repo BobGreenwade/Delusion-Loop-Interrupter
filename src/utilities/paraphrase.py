@@ -1,27 +1,25 @@
 """
-paraphrase.py - Prompts the hosting LLM to put standard text into the persona's own words
+paraphrase.py — Prompts the hosting LLM to put standard text into the persona's own words
 
 This module dynamically constructs persona-aware prompts using config-driven descriptors,
 recent chat history, and emotional tone cues. It sends those prompts to the hosting LLM
 to generate paraphrased output that reflects the persona's voice, rhythm, and editorial style.
 
-Drafted collaboratively with Copilot.
+Drafted collaboratively with Bob Greenwade and Copilot.
 """
 
-# 📦 Imports & Constants
 import os
 import glob
 import json
 import requests
+from learning import run_learning
 
 CONFIG_PATH = "config.json"
 
-# 📦 Load Config
 def load_config():
     with open(CONFIG_PATH, "r", encoding="utf-8") as f:
         return json.load(f)
 
-# 🧠 Resolve Persona Files
 def resolve_persona_files(persona_name):
     config = load_config()
     base_path = config["persona_resolution"]["base_path"]
@@ -35,7 +33,6 @@ def resolve_persona_files(persona_name):
 
     return persona_files
 
-# 🧠 Load Persona Data
 def load_persona_data(persona_name):
     files = resolve_persona_files(persona_name)
     data = {"name": persona_name, "sources": files, "description": ""}
@@ -50,7 +47,6 @@ def load_persona_data(persona_name):
 
     return data
 
-# 🧠 Scan Chat History
 def scan_chat_history(persona_name):
     config = load_config()
     path = config["chat_history"]["path"]
@@ -65,7 +61,6 @@ def scan_chat_history(persona_name):
         lines = f.readlines()[-limit:]
     return lines
 
-# 🧠 Build Prompt
 def build_prompt(text, persona_data, tone, style, history_lines):
     persona_desc = persona_data.get("description", "")
     history_excerpt = "\n".join(history_lines)
@@ -84,7 +79,6 @@ Original: "{text}"
 Paraphrased:
 """.strip()
 
-# 🧠 Call LLM
 def call_llm(prompt):
     config = load_config()
     endpoint = config["llm"]["endpoint"]
@@ -102,9 +96,28 @@ def call_llm(prompt):
         print(f"LLM call failed: {e}")
         return None
 
-# 🧠 Main Entry Point
 def paraphrase(text, persona="default", tone=None, style=None):
     persona_data = load_persona_data(persona)
     history_lines = scan_chat_history(persona)
+
+    # Optional ML tone/style refinement
+    try:
+        ml_result = run_learning("tone_adjustment", {
+            "text": text,
+            "persona": persona,
+            "tone": tone,
+            "style": style
+        })
+        tone = ml_result.get("output", {}).get("tone", tone)
+        style = ml_result.get("output", {}).get("style", style)
+    except Exception:
+        pass
+
     prompt = build_prompt(text, persona_data, tone, style, history_lines)
-    return call_llm(prompt) or text  # fallback to original if LLM fails
+    result = call_llm(prompt)
+    return result or text  # fallback to original if LLM fails
+
+# 🧠 Future placeholder: reparaphrase()
+# def reparaphrase(text, persona="default", tone=None, style=None, previous_attempt=None):
+#     """Refines or rephrases a prior paraphrase attempt based on editorial feedback."""
+#     ...
