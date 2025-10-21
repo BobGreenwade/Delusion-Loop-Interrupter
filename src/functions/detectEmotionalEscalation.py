@@ -2,12 +2,15 @@
 detectEmotionalEscalation.py — Flags affective spikes and gradual escalation using Plutchik vectors
 
 Compares emotion vectors and intensity scores across turns.
-Returns escalation type, period metadata, and editorial tone suggestion.
+Returns escalation type, period metadata, editorial tone suggestion, and logs emotional profile.
 Drafted collaboratively with Copilot and Bob Greenwade.
 """
 
 from emotion import analyze_emotion, map_emotion_to_tone
 from datetime import datetime
+
+# Optional: external emotional profile log
+emotional_profile_log = []
 
 def detect_spike(current_text, previous_text, threshold=0.4):
     current = analyze_emotion(current_text)
@@ -42,7 +45,18 @@ def get_escalation_period(emotion_history, time_history):
         duration_seconds = 0
     return {"turns": num_turns, "duration_seconds": duration_seconds}
 
-def detect_escalation(current_text, previous_text, emotion_history, time_history):
+def log_emotional_profile(user_id, emotion_data):
+    """
+    Logs emotional profile with timestamp for external modeling.
+    """
+    emotional_profile_log.append({
+        "user": user_id,
+        "timestamp": datetime.utcnow().isoformat(),
+        "emotion_vector": emotion_data["emotion_vector"],
+        "intensity": emotion_data["intensity"]
+    })
+
+def detect_escalation(current_text, previous_text, emotion_history, time_history, user_id="default"):
     escalation_type = "none"
     if detect_spike(current_text, previous_text):
         escalation_type = "spike"
@@ -52,6 +66,9 @@ def detect_escalation(current_text, previous_text, emotion_history, time_history
     current_emotion = analyze_emotion(current_text)
     editorial_tone = map_emotion_to_tone(current_emotion["emotion_vector"])
     period = get_escalation_period(emotion_history, time_history)
+
+    # Log emotional profile
+    log_emotional_profile(user_id, current_emotion)
 
     return {
         "escalation_type": escalation_type,
