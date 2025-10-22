@@ -1,10 +1,10 @@
 <!-- Drafted collaboratively with Copilot and Bob Greenwade -->
 
-# 🧩 Safeguard Flowchart
+# 🧩 Safeguard Flowchart — Version 0.1.4
 
 This document outlines the logical flow of the Delusion Loop Interrupter (DLI) safeguard system. It maps how detection functions trigger protocols, how mitigation is applied, and how escalation is editorialized.
 
-As of version 0.1.3, this system is considered **potentially deployable**—able, albeit perhaps a bit risky, to use.
+As of version 0.1.4, this system is considered **deployable for learning** — ready for supervised integration, editorial refinement, and ML-enhanced escalation logic.
 
 ---
 
@@ -19,8 +19,11 @@ Functions monitor conversational input and flag risk signals:
 - `detectRealityMode()` → reality mode tag + confidence  
 - `factCheck()` → verification status + confidence delta  
 - `interfaceWithMentalHealthModules()` → escalation payload + confirmation  
+  - Self-harm-detection integration planned  
 - `analyze_emotion()` → emotion vector + intensity  
-- `map_emotion_to_tone()` → editorial tone mapping
+- `map_emotion_to_tone()` → editorial tone mapping  
+- `semantic_distance()` → conceptual gap  
+- `reparaphrase()` → editorial stasis detection
 
 Each function outputs structured metadata to the protocol layer.  
 **ML-Ready**: All except `interfaceWithMentalHealthModules()`
@@ -42,7 +45,8 @@ Protocols respond to flagged signals based on thresholds and context:
   - Uses `generate_reality_prompt()` for confidence-aware mitigation  
 - `mitigatingLanguage()` ← triggered by speculative or illogical phrasing  
   - Uses `select_mitigation()` with persona and emotional tone  
-- `protocol_utils.py` ← supports logging, formatting, and fallback routing
+- `protocol_utils.py` ← supports logging, formatting, and fallback routing  
+- `transcript.py` ← supports tagging, summarization, and escalation handoff
 
 Protocols may trigger one another or escalate to external systems.  
 **ML-Ready**: All except `ethicalPause()`
@@ -56,13 +60,17 @@ Utilities support detection and protocol logic:
 - `embedding.py` — semantic comparison  
 - `emotion.py` — affective analysis and tone mapping  
 - `confidence.py` — certainty modeling  
-- `style.py` — mitigation phrasing  
+- `style.py` — mitigation phrasing and tone alignment  
+  - Includes `style_shift()` and `generate_style_tag()`  
 - `location.py` — optional location-aware logic  
 - `logger.py` — intervention tracking  
-- `phraseEditor.py` — standalone editorial tool  
+- `phraseEditor.py` — editorial tool  
+  - Includes `retag_phrase()` and `suggest_variants()`  
 - `paraphrase.py` — persona-aware phrasing engine  
-- `transcript.py` — context buffer and escalation handoff  
-- `profile.py` — user traits and escalation preferences
+- `transcript.py` — context buffer, tagging, and escalation handoff  
+- `profile.py` — user traits and escalation preferences  
+- `semantics.py` — lexical matching and euphemism detection  
+  - Includes `match_phrase_structure()` and `detect_euphemism()`
 
 Utilities are modular and fail gracefully if disabled.  
 **ML-Ready**: All except `location.py` and `phraseEditor.py`
@@ -84,5 +92,4 @@ Utilities are modular and fail gracefully if disabled.
 
 - All modules are designed for explainable behavior and graceful failure  
 - Flowchart may be visualized later using Mermaid, Graphviz, or UI mockups  
-- This scaffold will evolve with new modules, editorial layers, and deployment contexts  
-- ML integration is planned for most layers in future passes
+- Self-harm-detection will be embedded in mental health routing and escalation safeguards
