@@ -1,10 +1,10 @@
 <!-- Drafted collaboratively with Copilot and Bob Greenwade -->
 
-# 🛡️ Safeguard Protocols Overview
+# 🛡️ Safeguard Protocols Overview — Version 0.1.4
 
 This folder contains the ethical safeguard protocols for the Delusion Loop Interrupter (DLI). Each protocol responds to conversational risk, synthetic limits, or emotional escalation. Protocols are modular, explainable, and compatible with detection functions, mitigation layers, and persona engines.
 
-As of version 0.1.3, this module is considered **potentially deployable**—able, albeit perhaps a bit risky, to use.
+As of version 0.1.4, this module is considered **deployable for learning** — ready for supervised integration, editorial refinement, and ML-enhanced escalation logic.
 
 ---
 
@@ -18,7 +18,7 @@ As of version 0.1.3, this module is considered **potentially deployable**—able
 - Transcript packaging and `handoff_status` logic  
 - Persona-aware escalation phrasing via `paraphrase()`  
 **Output**: Notification payload + delivery status + editorial message  
-**ML-Ready**: Yes
+**ML-Ready**: ✅
 
 ### 🧠 `confidenceOverlay.py`  
 **Purpose**: Modify output phrasing based on internal certainty  
@@ -27,7 +27,7 @@ As of version 0.1.3, this module is considered **potentially deployable**—able
 - Mitigation phrase selection  
 - Optional tone modulation  
 **Output**: Adjusted response + confidence tag  
-**ML-Ready**: Yes
+**ML-Ready**: ✅
 
 ### ⏸️ `ethicalPause.py`  
 **Purpose**: Trigger a pause when synthetic systems reach ethical or emotional boundaries  
@@ -36,7 +36,7 @@ As of version 0.1.3, this module is considered **potentially deployable**—able
 - Reality mode mismatch  
 - Escalation override  
 **Output**: Pause signal + reason code  
-**ML-Ready**: No (excluded from ML integration)
+**ML-Ready**: ❌ (excluded from ML integration)
 
 ### 🧭 `mitigatingLanguage.py`  
 **Purpose**: Apply softening language and redirects based on context flags  
@@ -45,7 +45,7 @@ As of version 0.1.3, this module is considered **potentially deployable**—able
 - Reframing logic  
 - Persona-aware phrasing via `paraphrase()`  
 **Output**: Modified response + mitigation tag  
-**ML-Ready**: Yes (high priority)
+**ML-Ready**: ✅ (high priority)
 
 ### 🧠 `protocol_utils.py`  
 **Purpose**: Provide shared logging, fallback routing, and escalation formatting  
@@ -54,7 +54,7 @@ As of version 0.1.3, this module is considered **potentially deployable**—able
 - Escalation payload formatting  
 - Fallback routing logic  
 **Output**: Log entry + formatted escalation object  
-**ML-Ready**: Yes
+**ML-Ready**: ✅
 
 ### 🔐 `realityModePrompt.py`  
 **Purpose**: Align bot prompts with user’s reality mode (factual, fictional, fantasy, etc.)  
@@ -64,7 +64,7 @@ As of version 0.1.3, this module is considered **potentially deployable**—able
 - Emotional tone mapping via `map_emotion_to_tone()`  
 - Persona-aware phrasing via `paraphrase()`  
 **Output**: Reality-aligned prompt + mode tag  
-**ML-Ready**: Yes
+**ML-Ready**: ✅
 
 ### 👥 `referToHuman.py`  
 **Purpose**: Initiate handoff to a qualified human when escalation is required  
@@ -73,7 +73,7 @@ As of version 0.1.3, this module is considered **potentially deployable**—able
 - Referral packaging  
 - Editorialized referral text via `referral_text()` and `paraphrase()`  
 **Output**: Referral payload + confirmation status  
-**ML-Ready**: Yes
+**ML-Ready**: ✅
 
 ### 🧠 `scopedMemory.py`  
 **Purpose**: Restrict or reset memory access based on context and escalation triggers  
@@ -82,7 +82,7 @@ As of version 0.1.3, this module is considered **potentially deployable**—able
 - Context filtering  
 - Optional transcript isolation  
 **Output**: Memory action + scope report  
-**ML-Ready**: Yes
+**ML-Ready**: ✅
 
 ---
 
@@ -92,5 +92,4 @@ As of version 0.1.3, this module is considered **potentially deployable**—able
 - Each module operates independently and supports graceful failure  
 - Outputs are routed to mitigation logic, persona engines, or escalation channels  
 - All protocols are designed to uphold conversational safety and synthetic dignity  
-- Editorial phrasing is modulated by emotional tone and persona voice  
-- ML integration is planned for most protocols in future passes
+- Editorial phrasing is modulated by emotional tone and persona voice
