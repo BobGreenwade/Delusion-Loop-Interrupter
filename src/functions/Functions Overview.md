@@ -1,10 +1,10 @@
 <!-- Drafted collaboratively with Copilot and Bob Greenwade -->
 
-# 🧠 Core Functions Overview
+# 🧠 Core Functions Overview — Version 0.1.4
 
 This folder contains the core detection logic for the Delusion Loop Interrupter (DLI). Each function monitors conversational patterns and flags potential delusional reinforcement, emotional escalation, or reality misalignment.
 
-Functions are designed to be modular, explainable, and compatible with safeguard protocols, mitigation layers, and persona engines. As of version 0.1.3, this module is considered **potentially deployable**—able, albeit perhaps a bit risky, to use.
+Functions are designed to be modular, explainable, and compatible with safeguard protocols, mitigation layers, and persona engines. As of version 0.1.4, this module is considered **deployable for learning**—ready for training, refinement, and supervised integration.
 
 ---
 
@@ -17,7 +17,7 @@ Functions are designed to be modular, explainable, and compatible with safeguard
 - Emotion vector deltas  
 - Escalation period tracking  
 **Output**: Escalation type + emotion profile + editorial tone  
-**ML-Ready**: Yes
+**ML-Ready**: ✅
 
 ### 🧭 `detectRealityMode.py`  
 **Purpose**: Classify user input as grounded, speculative, fictional, fantasy, role-play, or indulgent  
@@ -26,7 +26,7 @@ Functions are designed to be modular, explainable, and compatible with safeguard
 - Phrase matching  
 - Emotional cadence  
 **Output**: `realityMode` tag + confidence score + editorial note  
-**ML-Ready**: Yes
+**ML-Ready**: ✅
 
 ### 📚 `factCheck.py`  
 **Purpose**: Verify factual claims and detect epistemic instability  
@@ -35,7 +35,7 @@ Functions are designed to be modular, explainable, and compatible with safeguard
 - Confidence modeling  
 - (Planned) Trust score and domain tagging  
 **Output**: Verification status + confidence delta  
-**ML-Ready**: Pending modular split
+**ML-Ready**: ⚠️ Pending modular split
 
 ### 🔁 `identifyRecursiveLoops.py`  
 **Purpose**: Detect belief reinforcement cycles with rising certainty  
@@ -44,7 +44,7 @@ Functions are designed to be modular, explainable, and compatible with safeguard
 - Repetition analysis  
 - Optional fact-check integration  
 **Output**: Loop signature + reinforcement index + severity + editorial tag  
-**ML-Ready**: Yes
+**ML-Ready**: ✅
 
 ### 🧠 `interfaceWithMentalHealthModules.py`  
 **Purpose**: Route flagged emotional or epistemic cases to external mental health support  
@@ -53,7 +53,8 @@ Functions are designed to be modular, explainable, and compatible with safeguard
 - Context packaging  
 - API handoff  
 **Output**: Referral payload + confirmation status  
-**ML-Ready**: No (excluded from ML integration)
+**ML-Ready**: ❌ (excluded from ML integration)  
+**Safeguard Layer**: Self-harm-detection integration planned
 
 ### 🪞 `mirrorDetection.py`  
 **Purpose**: Identify when the bot unintentionally validates distorted beliefs  
@@ -62,7 +63,7 @@ Functions are designed to be modular, explainable, and compatible with safeguard
 - Confidence mismatch  
 - Optional fact-check  
 **Output**: Mirroring flag + similarity score + mitigation tag  
-**ML-Ready**: Yes
+**ML-Ready**: ✅
 
 ### 🧠 `trackSemanticDrift.py`  
 **Purpose**: Detect increasing abstraction or detachment from grounded reality  
@@ -70,7 +71,7 @@ Functions are designed to be modular, explainable, and compatible with safeguard
 - Embedding comparisons  
 - Topic coherence tracking  
 **Output**: Drift score + topic shift count + editorial tag  
-**ML-Ready**: Yes
+**ML-Ready**: ✅
 
 ---
 
@@ -81,4 +82,7 @@ Functions are designed to be modular, explainable, and compatible with safeguard
 - Functions may interface with memory managers, persona scaffolds, or external modules  
 - All modules support graceful failure and explainable behavior  
 - Emotional tone and editorial modulation are supported via `map_emotion_to_tone()` and `paraphrase()`  
-- ML integration is planned for most functions in future passes
+- ML integration is active in most functions; training-ready scaffolds are in place  
+- `mergeLearning.py` is planned as a standalone utility to consolidate session-based learning results  
+- Batch Invariant Ops will be monitored for editorial stasis and paraphrase loop detection  
+- Self-harm-detection will be embedded in mental health routing and escalation safeguards
