@@ -83,6 +83,3 @@ Functions are designed to be modular, explainable, and compatible with safeguard
 - All modules support graceful failure and explainable behavior  
 - Emotional tone and editorial modulation are supported via `map_emotion_to_tone()` and `paraphrase()`  
 - ML integration is active in most functions; training-ready scaffolds are in place  
-- `mergeLearning.py` is planned as a standalone utility to consolidate session-based learning results  
-- Batch Invariant Ops will be monitored for editorial stasis and paraphrase loop detection  
-- Self-harm-detection will be embedded in mental health routing and escalation safeguards
