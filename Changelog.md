@@ -1,10 +1,106 @@
-<!-- Drafted collaboratively with Copilot -->
+<!-- Drafted collaboratively with Copilot and Bob Greenwade -->
 
 # 📦 DLI Changelog
 
 This file tracks version history and major changes to the Delusion Loop Interrupter (DLI) system.
 
 ---
+
+# 📦 Changelog — Version 0.1.4 — "Deployable for Learning" (October 2025)
+
+**Status:** Deployable for Learning — ready for supervised training, editorial refinement, and modular integration.
+
+---
+
+## ✨ Highlights
+
+- ML integration scaffolded across detection, protocol, and utility layers  
+- Editorial phrasing engines enhanced with tone shifting, tagging, and stasis detection  
+- Transcript logic expanded with tagging, summarization, and escalation metadata  
+- Phrase editing tools upgraded with retagging, variant suggestion, and ML tagging  
+- All overview documents updated to reflect current module status and roadmap
+
+---
+
+## 🧠 Detection Layer Updates
+
+- `detectEmotionalEscalation.py` — ML-ready escalation tracking  
+- `detectRealityMode.py` — confidence scoring and editorial notes  
+- `identifyRecursiveLoops.py` — reinforcement index and loop severity  
+- `mirrorDetection.py` — semantic similarity and mitigation tagging  
+- `trackSemanticDrift.py` — embedding-based drift detection  
+- `factCheck.py` — modular split planned for trust scoring  
+- `interfaceWithMentalHealthModules.py` — Self-harm-detection integration planned  
+- `reparaphrase()` added to detect editorial stasis  
+- `semantic_distance()` added to measure conceptual gaps
+
+---
+
+## 🛡️ Protocol Layer Updates
+
+- `referToHuman.py` — editorialized referral text  
+- `callHuman.py` — transcript packaging and persona-aware escalation  
+- `confidenceOverlay.py` — mitigation logic based on certainty  
+- `realityModePrompt.py` — confidence-aware prompt alignment  
+- `mitigatingLanguage.py` — tone-aware softening and redirect logic  
+- `scopedMemory.py` — context filtering and memory isolation  
+- `transcript.py` — now supports tagging, summarization, and escalation handoff  
+- `ethicalPause.py` — excluded from ML integration
+
+---
+
+## 🧰 Utility Layer Updates
+
+- `style.py` — added `style_shift()` and `generate_style_tag()`  
+- `semantics.py` — added `match_phrase_structure()` and `detect_euphemism()`  
+- `phraseEditor.py` — added `retag_phrase()` and `suggest_variants()`  
+- `transcript.py` — added `summarize_transcript()` and `tag_transcript_metadata()`  
+- `profile.py` — added `get_characteristic()` for editorial traits  
+- `paraphrase.py` — added `reparaphrase()` for editorial variation  
+- `requirements.txt` updated for ML and NLP scaffolding
+
+---
+
+## 📄 Documentation Updates
+
+- `Functions Overview.md` — updated for ML readiness and editorial scaffolds  
+- `Protocols Overview.md` — updated for escalation logic and safeguard layering  
+- `Utilities Overview.md` — updated for new functions and ML integration  
+- `Safeguard Flowchart.md` — updated for detection → protocol → utility flow  
+- `Changelog.md` — now includes roadmap and editorial tags
+
+---
+
+## 🧭 Roadmap
+
+### 🔜 Next Steps
+- Add `mergeLearning.py` as a standalone utility for merging ML data  
+- Add Self-harm-detection module to `interfaceWithMentalHealthModules.py`  
+- Implement Batch Invariant Ops to stabilize output  
+- Scaffold IMDb integration for context and tone detection via STT
+
+---
+
+### 🧠 Further On
+- Examine integration of external modules such as:
+  - Z3 Theorem Power  
+  - Drools  
+  - GoEmotions  
+  - OpenCyc  
+  - Allen's Interval Algebra  
+- Link to the separate Fact Check module  
+- Begin a database of idioms, euphemisms, and other editorial phrases
+
+---
+
+### 🕊️ Eventually
+- Build graphics for staff/programmer understanding  
+- Create and integrate an `AI User Oversight` package  
+- Link to the separate Voice-Reading module and other voice-chat packages  
+- Link `callHuman.py` to selected internal-messaging systems
+
+---
+
 ## 🧠 Version 0.1.3 — "Potentially Deployable" (October 2025)
 
 **Status**: Structurally sound, editorially aware, and ready for cautious use
