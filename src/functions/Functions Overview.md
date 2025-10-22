@@ -4,7 +4,7 @@
 
 This folder contains the core detection logic for the Delusion Loop Interrupter (DLI). Each function monitors conversational patterns and flags potential delusional reinforcement, emotional escalation, or reality misalignment.
 
-Functions are designed to be modular, explainable, and compatible with safeguard protocols, mitigation layers, and persona engines. As of version 0.1.4, this module is considered **deployable for learning**—ready for training, refinement, and supervised integration.
+Functions are designed to be modular, explainable, and compatible with safeguard protocols, mitigation layers, and persona engines. As of version 0.1.4, this module is considered **deployable for learning** — ready for training, refinement, and supervised integration.
 
 ---
 
