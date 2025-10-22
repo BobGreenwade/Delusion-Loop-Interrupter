@@ -2,15 +2,15 @@
 
 # 🧠 Delusion Loop Interrupter (DLI)
 
-**Version**: 0.1.3  
+**Version**: 0.1.4  
 **License**: MIT  
-**Status**: Potentially Deployable — structurally sound, editorially aware, and ready for cautious use
+**Status**: Deployable for Learning — structurally sound, editorially aware, and ready for supervised training
 
 ## Overview
 
 The Delusion Loop Interrupter (DLI) is modular middleware designed to detect and interrupt recursive belief reinforcement in chatbot conversations. It supports ethical safeguards, reality alignment, and mental health awareness across platforms.
 
-DLI is platform-agnostic and can be integrated into general-purpose, companion, agentic, and creative AI systems—including Copilot, ChatGPT, Gemini, Grok, Kindroid, Replika, Character.AI, and others.
+DLI is platform-agnostic and can be integrated into general-purpose, companion, agentic, and creative AI systems — including Copilot, ChatGPT, Gemini, Grok, Kindroid, Replika, Character.AI, and others.
 
 ---
 
@@ -25,6 +25,8 @@ Detection modules monitor conversational patterns and flag risk signals:
 - `interfaceWithMentalHealthModules.py` — external escalation handoff  
 - `mirrorDetection.py` — distorted belief validation  
 - `trackSemanticDrift.py` — abstraction and detachment  
+- `reparaphrase()` — editorial stasis detection  
+- `semantic_distance()` — conceptual gap measurement
 
 See [`Functions Overview`](./src/functions/Functions%20Overview.md) for details.
 
@@ -42,6 +44,7 @@ Protocols respond to flagged signals with mitigation, escalation, or memory isol
 - `realityModePrompt.py` — framing alignment  
 - `referToHuman.py` — referral to trusted individuals  
 - `scopedMemory.py` — memory isolation  
+- `transcript.py` — tagging, summarization, and escalation handoff
 
 See [`Protocols Overview`](./src/protocols/Protocols%20Overview.md) and [`Safeguard Flowchart`](./Safeguard%20Flowchart.md) for logic and escalation paths.
 
@@ -60,14 +63,15 @@ Reusable tools support detection and protocol logic:
 - `logger.py` — intervention tracking and editorial tagging  
 - `paraphrase.py` — persona-aware editorial phrasing  
 - `profile.py` — user traits and escalation preferences  
-- `semantics.py` — synonym expansion and word-form matching  
+- `semantics.py` — lexical matching and euphemism detection  
 - `style.py` — mitigation phrasing and tone alignment  
-- `transcript.py` — context buffer and escalation handoff  
+- `transcript.py` — context buffer, tagging, and escalation handoff
 
 Standalone utilities:
 
 - `configEditor.py` — configuration editor  
 - `phraseEditor.py` — editorial tool  
+- `mergeLearning.py` — ML session combiner (planned)
 
 See [`Utilities Overview`](./src/utilities/Utilities%20Overview.md) for details.
 
@@ -91,7 +95,7 @@ DLI can be integrated into:
 - **Persona Profiles** — support known roleplay characters or editorial modes  
 - **Reality Modes** — enable tagging and clarification prompts  
 - **Mitigation Style** — adjust tone (clinical, playful, narrative) per bot personality  
-- **Location Awareness** — optional toggle with fallback behavior (`ask` or `silent`)  
+- **Location Awareness** — optional toggle with fallback behavior (`ask` or `silent`)
 
 ---
 
@@ -104,9 +108,9 @@ DLI is built with the following principles:
 - **Transparency** — ensure interventions are traceable and explainable  
 - **Engagement Preservation** — maintain trust and conversational flow  
 - **Mental Health Respect** — collaborate with detection systems, never replace care  
-- **AI Autonomy** — preserve bot agency and expressive range  
+- **AI Autonomy** — preserve bot agency and expressive range
 
-> **DLI is not a substitute for therapy or crisis response. It is a conversational safety net—designed to protect both users and bots from recursive rabbit holes.**
+> **DLI is not a substitute for therapy or crisis response. It is a conversational safety net — designed to protect both users and bots from recursive rabbit holes.**
 
 ---
 
@@ -116,6 +120,6 @@ DLI is built with the following principles:
 - [Credits](./Credits.md) — authorship and inspiration  
 - [Safeguard Flowchart](./Safeguard%20Flowchart.md) — escalation logic
 
-  (Already in the menu:)
+(Already in the menu:)  
 - [Code of Conduct](./Code%20of%20Conduct.md) — collaboration principles  
 - [Contributing](./Contributing.md) — guidelines for contributors
