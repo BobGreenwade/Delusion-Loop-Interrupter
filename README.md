@@ -10,6 +10,8 @@
 
 The Delusion Loop Interrupter (DLI) is modular middleware designed to detect and interrupt recursive belief reinforcement in chatbot conversations. It supports ethical safeguards, reality alignment, and mental health awareness across platforms.
 
+While the primary function of DLI is to break delusional reinforcement loops, it does have several other functions, either built-in or optional, to either serve or enhance that function. Among other things, it has a basic fact checking system, can integrate with mental health AI modules, and even includes a rudimentary system for calling in human intervention should harm to self or others seem imminent.
+
 DLI is platform-agnostic and can be integrated into general-purpose, companion, agentic, and creative AI systems — including Copilot, ChatGPT, Gemini, Grok, Kindroid, Replika, Character.AI, and others.
 
 ---
