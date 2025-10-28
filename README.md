@@ -27,8 +27,6 @@ Detection modules monitor conversational patterns and flag risk signals:
 - `interfaceWithMentalHealthModules.py` — external escalation handoff  
 - `mirrorDetection.py` — distorted belief validation  
 - `trackSemanticDrift.py` — abstraction and detachment  
-- `reparaphrase()` — editorial stasis detection  
-- `semantic_distance()` — conceptual gap measurement
 
 See [`Functions Overview`](./src/functions/Functions%20Overview.md) for details.
 
